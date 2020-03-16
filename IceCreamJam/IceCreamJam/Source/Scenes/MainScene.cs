@@ -1,5 +1,6 @@
-﻿using IceCreamJam.Source.Scenes.Entities;
+﻿using IceCreamJam.Source.Entities;
 using Nez;
+using Microsoft.Xna.Framework;
 
 namespace IceCreamJam.Source.Scenes {
     class MainScene : Scene {
@@ -11,7 +12,7 @@ namespace IceCreamJam.Source.Scenes {
         public override void OnStart() {
             base.OnStart();
 
-            AddEntity(new Truck());
+            AddEntity(new Truck()).Position = new Vector2(Screen.Width / 2, Screen.Height/2);
         }
     }
 }
