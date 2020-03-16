@@ -49,6 +49,7 @@
     <Compile Include="Source\Components\PlayerMovementComponent.cs" />
     <Compile Include="Source\Content\ContentPaths.cs" />
     <Compile Include="Source\Entities\Truck.cs" />
+    <Compile Include="Source\InputManager.cs" />
     <Compile Include="Source\Scenes\MainScene.cs" />
     <Compile Include="Source\WeaponSystem\Projectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\TestProjectile2.cs" />

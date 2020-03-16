@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace IceCreamJam.Source.WeaponSystem {
     // For any entity which can use weapons
-    class WeaponComponent : Component {
+    class WeaponComponent : Component, IUpdatable {
         public Deque<Weapon> weapons;
         public Weapon activeWeapon;
 
@@ -34,6 +34,15 @@ namespace IceCreamJam.Source.WeaponSystem {
 
         public void Shoot() {
             activeWeapon.Shoot();
+        }
+
+        public void Update() {
+            if (InputManager.shoot.IsDown)
+                Shoot();
+            if (InputManager.switchWeapon.Value > 0)
+                CycleForward();
+            if (InputManager.switchWeapon.Value < 0)
+                CycleBackwards();
         }
     }
 }

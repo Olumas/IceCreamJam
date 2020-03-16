@@ -21,17 +21,5 @@ namespace IceCreamJam.Source.Entities {
 
             weapons = AddComponent(new WeaponComponent(new TestWeapon(), new TestWeapon2()));
         }
-
-        public override void Update() {
-            base.Update();
-
-            // TODO: connect this to input system
-            if(Input.LeftMouseButtonDown)
-                weapons.Shoot();
-            if(Input.MouseWheelDelta == 120)
-                weapons.CycleForward();
-            if(Input.MouseWheelDelta == -120)
-                weapons.CycleBackwards();
-        }
     }
 }
