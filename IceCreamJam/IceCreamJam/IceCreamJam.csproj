@@ -47,7 +47,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Content\ContentPaths.cs" />
-    <Compile Include="Source\Scenes\Entities\Truck.cs" />
+    <Compile Include="Source\Entities\Truck.cs" />
     <Compile Include="Source\Scenes\MainScene.cs" />
   </ItemGroup>
   <ItemGroup>
