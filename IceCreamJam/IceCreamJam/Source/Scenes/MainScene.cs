@@ -1,4 +1,4 @@
-﻿using IceCreamJam.Source.Scenes.Entities;
+﻿using IceCreamJam.Source.Entities;
 using Nez;
 
 namespace IceCreamJam.Source.Scenes {
@@ -11,7 +11,7 @@ namespace IceCreamJam.Source.Scenes {
         public override void OnStart() {
             base.OnStart();
 
-            AddEntity(new Truck());
+            var truck = AddEntity(new Truck());
         }
     }
 }
