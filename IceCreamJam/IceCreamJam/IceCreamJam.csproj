@@ -108,8 +108,8 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Nez\Nez.Portable\Nez.csproj">
-      <Project>{0f2b2de2-2179-48cb-bd57-54a8a882490d}</Project>
+    <ProjectReference Include="..\Nez\Nez.Portable\Nez.csproj">
+      <Project>{85150cf9-2e0b-462e-9086-c3ef4fb6a345}</Project>
       <Name>Nez</Name>
     </ProjectReference>
   </ItemGroup>
