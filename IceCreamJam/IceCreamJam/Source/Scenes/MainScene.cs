@@ -12,7 +12,7 @@ namespace IceCreamJam.Source.Scenes {
         public override void OnStart() {
             base.OnStart();
 
-            AddEntity(new Truck()).Position = new Vector2(Screen.Width / 2, Screen.Height/2);
+            var truck = AddEntity(new Truck()).Position = new Vector2(Screen.Width / 2, Screen.Height/2);
         }
     }
 }
