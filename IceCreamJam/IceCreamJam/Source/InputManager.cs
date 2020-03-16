@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 using Nez;
 
 namespace IceCreamJam.Source {
@@ -17,29 +11,32 @@ namespace IceCreamJam.Source {
 		public static readonly VirtualIntegerAxis switchWeapon;
 
 		static InputManager() {
-			up = new VirtualButton();
-			up.AddKeyboardKey(Keys.W);
-			down = new VirtualButton();
-			down.AddKeyboardKey(Keys.D);
-			left = new VirtualButton();
-			left.AddKeyboardKey(Keys.A);
-			right = new VirtualButton();
-			right.AddKeyboardKey(Keys.D);
+			up = new VirtualButton().AddKeyboardKey(Keys.W);
+			down = new VirtualButton().AddKeyboardKey(Keys.D);
+			left = new VirtualButton().AddKeyboardKey(Keys.A);
+			right = new VirtualButton().AddKeyboardKey(Keys.D);
 
 			drive = new VirtualAxis();
-			drive.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.S, Keys.W));
+			drive.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.W, Keys.S));
+			drive.Nodes.Add(new VirtualAxis.GamePadLeftStickY());
+
 			steer = new VirtualAxis();
 			steer.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.A, Keys.D));
+			steer.Nodes.Add(new VirtualAxis.GamePadLeftStickX());
 
 			shoot = new VirtualButton();
 			shoot.AddMouseLeftButton();
+			shoot.AddGamePadRightTrigger(0, 0.2f);
 
-			var prev = new VirtualButton(new VirtualButton.KeyboardKey(Keys.Q));
-			var next = new VirtualButton(new VirtualButton.KeyboardKey(Keys.E));
+			var prevKey = new VirtualButton(new VirtualButton.KeyboardKey(Keys.Q));
+			var nextKey = new VirtualButton(new VirtualButton.KeyboardKey(Keys.E));
+			var prevGamepad = new VirtualButton(new VirtualButton.GamePadButton(0, Buttons.X));
+			var nextGamepad = new VirtualButton(new VirtualButton.GamePadButton(0, Buttons.A));
 
 			switchWeapon = new VirtualIntegerAxis();
-			switchWeapon.Nodes.Add(new ButtonAxis(prev, next));
+			switchWeapon.Nodes.Add(new ButtonAxis(prevKey, nextKey));
 			switchWeapon.Nodes.Add(new ScrollAxis());
+			switchWeapon.Nodes.Add(new ButtonAxis(prevGamepad, nextGamepad));
 		}
 
 		// this class are a bit of a hack
