@@ -2,7 +2,7 @@
 using Nez;
 using Nez.Sprites;
 
-namespace IceCreamJam.Source.Scenes.Entities {
+namespace IceCreamJam.Source.Entities {
     class Truck : Entity {
         public override void OnAddedToScene() {
             base.OnAddedToScene();
