@@ -31,6 +31,7 @@ namespace IceCreamJam.Source.WeaponSystem {
                 var scene = weaponComponent.Entity.Scene;
                 var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - weaponComponent.Entity.Position);
                 var p = (Projectile)Activator.CreateInstance(projectileType, dir);
+                p.Position = weaponComponent.Entity.Position;
                 weaponComponent.Entity.Scene.AddEntity(p);
             }
         }

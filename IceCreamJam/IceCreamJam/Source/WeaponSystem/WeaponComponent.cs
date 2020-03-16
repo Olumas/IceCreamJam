@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 namespace IceCreamJam.Source.WeaponSystem {
-    // For any entity which can use weapons
     class WeaponComponent : Component, IUpdatable {
         public Deque<Weapon> weapons;
         public Weapon activeWeapon;

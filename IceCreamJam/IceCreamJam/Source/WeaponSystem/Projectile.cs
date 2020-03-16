@@ -7,6 +7,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         public float cost;
         public float damage;
         public string texturePath;
+        public float speed;
 
         public Vector2 direction;
 
