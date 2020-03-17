@@ -10,5 +10,10 @@
         public const string TestProjectile = Projectiles + "/TestProjectile.png";
         public const string TestProjectile2 = Projectiles + "/TestProjectile2.png";
         #endregion
+
+        #region Maps
+        public const string TiledMaps = Content + "/TiledMaps";
+        public const string Test1 = TiledMaps + "/Test1.tmx";
+        #endregion
     }
 }
