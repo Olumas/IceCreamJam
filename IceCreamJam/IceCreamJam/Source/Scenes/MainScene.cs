@@ -24,7 +24,8 @@ namespace IceCreamJam.Source.Scenes {
 
         public override void Update() {
             base.Update();
-            Camera.Position = truck.Position;
+
+            Camera.Position += (truck.Position - Camera.Position)/10;
         }
     }
 }

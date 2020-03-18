@@ -14,5 +14,10 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         public override Vector2 CalculateVector() {
             return direction * speed;
         }
+
+        public override void OnHit() {
+            Scene.AddEntity(new TestProjectile(-direction) { Position = this.Position });
+            base.OnHit();
+        }
     }
 }

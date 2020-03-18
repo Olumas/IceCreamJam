@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using IceCreamJam.Source.Entities;
+using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
 
@@ -26,6 +27,10 @@ namespace IceCreamJam.Source.WeaponSystem {
 
             var texture = Scene.Content.LoadTexture(texturePath);
             this.renderer = AddComponent(new SpriteRenderer(texture));
+            var b = AddComponent(new BoxCollider());
+            b.PhysicsLayer = (int)Constants.PhysicsLayers.PlayerProjectiles;
+            b.CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC);
+
             this.moveComponent = AddComponent(new Mover());
         }
 
@@ -45,6 +50,10 @@ namespace IceCreamJam.Source.WeaponSystem {
         protected void Move() {
             var vector = CalculateVector();
             moveComponent.Move(vector, out var collisionResult);
+
+            if(collisionResult.Collider != null && collisionResult.Collider.Entity.GetType() == typeof(Building)) {
+                OnHit();
+            }
 
             // TODO: Check if other is enemy using collisionResult
             // If so, call OnHit();

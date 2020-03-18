@@ -15,9 +15,15 @@ namespace IceCreamJam.Source.Entities {
 
 			var texture = Scene.Content.LoadTexture(ContentPaths.TruckSprite);
 			AddComponent(new SpriteRenderer(texture));
-			AddComponent(new BoxCollider());
-			AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false });
+            var collider = AddComponent(new BoxCollider());
+            collider.PhysicsLayer = (int)Constants.PhysicsLayers.Player;
+            collider.CollidesWithLayers = (int)Constants.PhysicsLayers.Buildings;
+
+
+            AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false });
 			AddComponent(new PlayerMovementComponent());
+
+            
 
             weapons = AddComponent(new WeaponComponent(new TestWeapon(), new TestWeapon2()));
         }

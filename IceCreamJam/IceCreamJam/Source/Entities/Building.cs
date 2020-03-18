@@ -10,7 +10,10 @@ namespace IceCreamJam.Source.Entities {
 
             var texture = Scene.Content.LoadTexture(ContentPaths.TruckSprite);
             AddComponent(new SpriteRenderer(texture));
-            AddComponent(new BoxCollider());
+            var collider = AddComponent(new BoxCollider());
+
+            collider.PhysicsLayer = (int)Constants.PhysicsLayers.Buildings;
+            
         }
     }
 }
