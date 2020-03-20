@@ -17,8 +17,8 @@ namespace IceCreamJam.Source {
 			right = new VirtualButton().AddKeyboardKey(Keys.D);
 
 			drive = new VirtualAxis();
-			drive.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.W, Keys.S));
-			drive.Nodes.Add(new VirtualAxis.GamePadLeftStickY());
+			drive.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.S, Keys.W));
+			drive.Nodes.Add(new VirtualAxis.GamePadLeftStickY() { InvertResult = false });
 
 			steer = new VirtualAxis();
 			steer.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.A, Keys.D));

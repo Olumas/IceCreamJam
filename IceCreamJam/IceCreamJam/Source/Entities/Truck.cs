@@ -13,17 +13,16 @@ namespace IceCreamJam.Source.Entities {
         public override void OnAddedToScene() {
             base.OnAddedToScene();
 
+            this.Name = "Truck";
+
 			var texture = Scene.Content.LoadTexture(ContentPaths.TruckSprite);
 			AddComponent(new SpriteRenderer(texture));
             var collider = AddComponent(new BoxCollider());
             collider.PhysicsLayer = (int)Constants.PhysicsLayers.Player;
             collider.CollidesWithLayers = (int)Constants.PhysicsLayers.Buildings;
 
-
             AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false });
 			AddComponent(new PlayerMovementComponent());
-
-            
 
             weapons = AddComponent(new WeaponComponent(new TestWeapon(), new TestWeapon2()));
         }
