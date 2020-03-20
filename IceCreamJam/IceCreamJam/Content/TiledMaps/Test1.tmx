@@ -6,7 +6,7 @@
    <properties>
     <property name="TileID" value="Building"/>
    </properties>
-   <image width="100" height="100" source="../Sprites/Truck.png"/>
+   <image width="100" height="100" source="../Sprites/Box.png"/>
   </tile>
  </tileset>
  <layer id="1" name="Buildings" width="10" height="10">

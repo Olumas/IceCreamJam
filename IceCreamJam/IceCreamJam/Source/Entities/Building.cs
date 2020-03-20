@@ -8,7 +8,7 @@ namespace IceCreamJam.Source.Entities {
             base.OnAddedToScene();
 
 
-            var texture = Scene.Content.LoadTexture(ContentPaths.TruckSprite);
+            var texture = Scene.Content.LoadTexture(ContentPaths.BoxSprite);
             AddComponent(new SpriteRenderer(texture));
             var collider = AddComponent(new BoxCollider());
 
