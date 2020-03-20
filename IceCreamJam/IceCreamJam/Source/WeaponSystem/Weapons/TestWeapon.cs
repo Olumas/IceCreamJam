@@ -5,7 +5,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
         public TestWeapon() {
             this.projectileType = typeof(TestProjectile);
             this.name = "TestWeapon";
-            this.reloadTime = 0.5f;
+            this.reloadTime = 0.1f;
         }
     }
 }
