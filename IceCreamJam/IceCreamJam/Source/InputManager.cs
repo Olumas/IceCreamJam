@@ -4,7 +4,14 @@ using Nez;
 namespace IceCreamJam.Source {
 	static class InputManager {
 		public static readonly VirtualButton up, down, left, right;
-		public static readonly VirtualAxis drive, steer;
+		/// <summary>
+		/// negative values are forward, positive values are backwards
+		/// </summary>
+		public static readonly VirtualAxis drive;
+		/// <summary>
+		/// positive values are clockwise, negative values are counterclockwise
+		/// </summary>
+		public static readonly VirtualAxis steer;
 
 		public static readonly VirtualButton shoot;
 		// not sure if necessary
@@ -17,8 +24,8 @@ namespace IceCreamJam.Source {
 			right = new VirtualButton().AddKeyboardKey(Keys.D);
 
 			drive = new VirtualAxis();
-			drive.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.S, Keys.W));
-			drive.Nodes.Add(new VirtualAxis.GamePadLeftStickY() { InvertResult = false });
+			drive.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.W, Keys.S));
+			drive.Nodes.Add(new VirtualAxis.GamePadLeftStickY());
 
 			steer = new VirtualAxis();
 			steer.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.A, Keys.D));

@@ -21,7 +21,9 @@ namespace IceCreamJam.Source.Entities {
             collider.PhysicsLayer = (int)Constants.PhysicsLayers.Player;
             collider.CollidesWithLayers = (int)Constants.PhysicsLayers.Buildings;
 
-            AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false });
+            var rb = AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false });
+            rb.Elasticity = 0;
+
 			AddComponent(new PlayerMovementComponent());
 
             weapons = AddComponent(new WeaponComponent(new TestWeapon(), new TestWeapon2()));
