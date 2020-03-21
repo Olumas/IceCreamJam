@@ -46,6 +46,8 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Components\PlayerAnimationComponent.cs" />
+    <Compile Include="Source\Components\PlayerDirection.cs" />
     <Compile Include="Source\Components\PlayerMovementComponent.cs" />
     <Compile Include="Source\Constants.cs" />
     <Compile Include="Source\Content\ContentPaths.cs" />
@@ -245,11 +247,7 @@
     <Content Include="Content\Sprites\Truck\7a.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Truck\7b.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
