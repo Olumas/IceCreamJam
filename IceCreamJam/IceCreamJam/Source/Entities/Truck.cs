@@ -24,7 +24,7 @@ namespace IceCreamJam.Source.Entities {
 			AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false, Elasticity = 0 });
 			AddComponent(new PlayerMovementComponent());
 
-			AddComponent(new WeaponComponent(new TestWeapon(), new TestWeapon2()));
+			AddComponent(new WeaponComponent(new TestWeapon(), new ScoopGun()));
 		}
 	}
 }

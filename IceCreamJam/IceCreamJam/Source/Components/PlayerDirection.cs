@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nez;
+﻿using Nez;
+using System;
 
 namespace IceCreamJam.Source.Components {
 	class PlayerDirection : Component {
