@@ -1,4 +1,5 @@
-﻿using Nez;
+﻿using Microsoft.Xna.Framework;
+using Nez;
 using System.Collections.Generic;
 
 namespace IceCreamJam.Source.WeaponSystem {
@@ -19,15 +20,32 @@ namespace IceCreamJam.Source.WeaponSystem {
 
         public override void OnAddedToEntity() {
             base.OnAddedToEntity();
+
+            foreach(Weapon w in weapons) {
+                Entity.Scene.AddEntity(w);
+                w.SetEnabled(false);
+            }
         }
 
         public void CycleForward() {
+            activeWeapon.SetEnabled(false);
+            activeWeapon.OnUnequipped();
+
             activeWeapon = weapons.RemoveFront();
+            activeWeapon.SetEnabled(true);
+            activeWeapon.OnEquipped();
+
             weapons.AddBack(activeWeapon);
         }
 
         public void CycleBackwards() {
+            activeWeapon.SetEnabled(false);
+            activeWeapon.OnUnequipped();
+
             activeWeapon = weapons.RemoveBack();
+            activeWeapon.SetEnabled(true);
+            activeWeapon.OnEquipped();
+
             weapons.AddFront(activeWeapon);
         }
 
@@ -42,6 +60,8 @@ namespace IceCreamJam.Source.WeaponSystem {
                 CycleForward();
             if (InputManager.switchWeapon.Value < 0)
                 CycleBackwards();
+
+            activeWeapon.Position = Entity.Position + new Vector2(0, -15);
         }
     }
 }

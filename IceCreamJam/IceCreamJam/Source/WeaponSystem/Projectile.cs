@@ -13,7 +13,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         public Vector2 direction;
 
         protected Mover moveComponent;
-        public SpriteRenderer renderer;
+        public RenderableComponent renderer;
 
         public Projectile(Vector2 direction) {
             this.direction = direction;
@@ -25,13 +25,17 @@ namespace IceCreamJam.Source.WeaponSystem {
         public override void OnAddedToScene() {
             base.OnAddedToScene();
 
-            var texture = Scene.Content.LoadTexture(texturePath);
-            this.renderer = AddComponent(new SpriteRenderer(texture));
+            SetupTextures();
             var b = AddComponent(new BoxCollider());
             b.PhysicsLayer = (int)Constants.PhysicsLayers.PlayerProjectiles;
             b.CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC);
 
             this.moveComponent = AddComponent(new Mover());
+        }
+
+        public virtual void SetupTextures() {
+            var texture = Scene.Content.LoadTexture(texturePath);
+            this.renderer = AddComponent(new SpriteRenderer(texture));
         }
 
         // Override this to instantiate sub-projectiles

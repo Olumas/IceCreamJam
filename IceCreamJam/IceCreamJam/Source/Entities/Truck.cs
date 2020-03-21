@@ -2,11 +2,9 @@
 using IceCreamJam.Source.Content;
 using IceCreamJam.Source.WeaponSystem;
 using IceCreamJam.Source.WeaponSystem.Weapons;
-using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
 using Nez.Textures;
-using System;
 using System.Collections.Generic;
 
 namespace IceCreamJam.Source.Entities {
@@ -35,15 +33,14 @@ namespace IceCreamJam.Source.Entities {
             this.rb = AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false, Elasticity = 0 });
 			this.moveComponent = AddComponent(new PlayerMovementComponent());
 
-            weapons = AddComponent(new WeaponComponent(new TestWeapon(), new TestWeapon2()));
+            weapons = AddComponent(new WeaponComponent(new TestWeapon(), new ScoopGun()));
         }
 
         private void LoadSprites() {
             sprites = new List<Sprite>();
 
-            for(int i = 1; i < 9; i++) {
+            for(int i = 0; i < 8; i++) {
                 sprites.Add(new Sprite(Scene.Content.LoadTexture(ContentPaths.Truck + i + "a.png")));
-                Debug.Log(ContentPaths.Truck + i + "a.png");
             }
         }
 

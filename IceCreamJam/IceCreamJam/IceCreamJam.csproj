@@ -47,20 +47,23 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Components\PlayerMovementComponent.cs" />
-    <Compile Include="Source\Components\PlayerMovementComponent2.cs" />
     <Compile Include="Source\Constants.cs" />
     <Compile Include="Source\Content\ContentPaths.cs" />
+    <Compile Include="Source\Entities\AnimatedEntity.cs" />
     <Compile Include="Source\Entities\Building.cs" />
+    <Compile Include="Source\Entities\SpriteEntity.cs" />
     <Compile Include="Source\Entities\Truck.cs" />
     <Compile Include="Source\InputManager.cs" />
     <Compile Include="Source\Scenes\MainScene.cs" />
     <Compile Include="Source\TilemapLoader.cs" />
     <Compile Include="Source\Utility.cs" />
     <Compile Include="Source\WeaponSystem\Projectile.cs" />
+    <Compile Include="Source\WeaponSystem\Projectiles\Scoop.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\TestProjectile2.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\TestProjectile.cs" />
     <Compile Include="Source\WeaponSystem\Weapon.cs" />
     <Compile Include="Source\WeaponSystem\WeaponComponent.cs" />
+    <Compile Include="Source\WeaponSystem\Weapons\ScoopGun.cs" />
     <Compile Include="Source\WeaponSystem\Weapons\TestWeapon2.cs" />
     <Compile Include="Source\WeaponSystem\Weapons\TestWeapon.cs" />
   </ItemGroup>
@@ -137,37 +140,112 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Sprites\Projectiles\TestProjectile2.png">
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_Cone.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Projectiles\TestProjectile.png">
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_0C.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_0S.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_0V.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_1C.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_1S.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_1V.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_Base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_0C.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_0S.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_0V.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_1C.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_1S.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_1V.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_2C.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_2S.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_2V.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\TestProjectile2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\TestProjectile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Box.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sprites\Truck\0a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Truck\0b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Sprites\Truck\1a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Truck\1b.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Truck\2a.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sprites\Truck\2b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Sprites\Truck\3a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Truck\3b.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Truck\4a.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sprites\Truck\4b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Sprites\Truck\5a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Truck\5b.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Truck\6a.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sprites\Truck\6b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Sprites\Truck\7a.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Truck\8a.png">
+    <Content Include="Content\Sprites\Truck\7b.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

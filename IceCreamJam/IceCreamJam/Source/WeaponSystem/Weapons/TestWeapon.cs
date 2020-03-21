@@ -7,5 +7,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             this.name = "TestWeapon";
             this.reloadTime = 0.1f;
         }
+
+        public override void InitializeRenderer() { }
     }
 }

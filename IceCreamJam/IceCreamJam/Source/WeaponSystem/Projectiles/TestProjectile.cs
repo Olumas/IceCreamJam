@@ -7,7 +7,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         public TestProjectile(Vector2 direction) : base(direction) {
             this.cost = 1;
             this.damage = 1;
-            this.speed = 10;
+            this.speed = 5;
             this.texturePath = ContentPaths.TestProjectile;
         }
 

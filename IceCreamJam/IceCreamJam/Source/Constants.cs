@@ -6,6 +6,8 @@ namespace IceCreamJam.Source {
         public const string TiledLayerBuildings = "Buildings";
         public const string TiledPropertyID = "TileID";
 
+        public const int GlobalFPS = 8;
+
         [Flags]
         public enum PhysicsLayers {
             None = 0,

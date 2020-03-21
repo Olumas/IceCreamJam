@@ -6,19 +6,15 @@
         public const string BoxSprite = Sprites + "Box.png";
 
         public const string Truck = Sprites + "Truck/";
-        public const string Truck_1a = Truck + "1a.png";
-        public const string Truck_2a = Truck + "2a.png";
-        public const string Truck_3a = Truck + "3a.png";
-        public const string Truck_4a = Truck + "4a.png";
-        public const string Truck_5a = Truck + "5a.png";
-        public const string Truck_6a = Truck + "6a.png";
-        public const string Truck_7a = Truck + "7a.png";
-        public const string Truck_8a = Truck + "8a.png";
 
-        #region Projectiles
-        public const string Projectiles = Sprites + "Projectiles/";
-        public const string TestProjectile = Projectiles + "TestProjectile.png";
-        public const string TestProjectile2 = Projectiles + "TestProjectile2.png";
+        #region Weapons
+        public const string Weapons = Sprites + "Weapons/";
+        public const string TestProjectile = Weapons + "TestProjectile.png";
+        public const string TestProjectile2 = Weapons + "TestProjectile2.png";
+
+        public const string Scoop = Weapons + "Scoop/";
+        public const string Scoop_Base = Scoop + "Scoop_Base.png";
+        public const string Scoop_Cone = Scoop + "Scoop_Cone.png";
         #endregion
 
         #region Maps

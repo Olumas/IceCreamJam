@@ -26,6 +26,7 @@ namespace IceCreamJam.Source.Scenes {
             base.Update();
 
             Camera.Position += (truck.Position - Camera.Position)/10;
+            Camera.ZoomIn(2);
         }
     }
 }
