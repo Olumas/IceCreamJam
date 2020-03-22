@@ -17,7 +17,8 @@ namespace IceCreamJam.Source.Entities {
 			AddComponent(new SpriteAnimator());
 			AddComponent(new PlayerAnimationComponent());
 
-			var collider = AddComponent(new BoxCollider());
+			//var collider = AddComponent(new BoxCollider());
+			var collider = AddComponent(new PolygonCollider());
 			collider.PhysicsLayer = (int)Constants.PhysicsLayers.Player;
 			collider.CollidesWithLayers = (int)Constants.PhysicsLayers.Buildings;
 

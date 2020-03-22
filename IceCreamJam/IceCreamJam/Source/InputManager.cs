@@ -5,31 +5,31 @@ namespace IceCreamJam.Source {
 	static class InputManager {
 		public static readonly VirtualButton up, down, left, right;
 		/// <summary>
-		/// negative values are forward, positive values are backwards
+		/// negative values are up, positive values are down
 		/// </summary>
-		public static readonly VirtualAxis drive;
+		public static readonly VirtualAxis yAxis;
 		/// <summary>
-		/// positive values are clockwise, negative values are counterclockwise
+		/// negative values are left, positive values are right
 		/// </summary>
-		public static readonly VirtualAxis steer;
+		public static readonly VirtualAxis xAxis;
 
 		public static readonly VirtualButton shoot;
 		// not sure if necessary
 		public static readonly VirtualIntegerAxis switchWeapon;
 
 		static InputManager() {
-			up = new VirtualButton().AddKeyboardKey(Keys.W);
-			down = new VirtualButton().AddKeyboardKey(Keys.D);
-			left = new VirtualButton().AddKeyboardKey(Keys.A);
-			right = new VirtualButton().AddKeyboardKey(Keys.D);
+			up = new VirtualButton().AddKeyboardKey(Keys.W).AddGamePadButton(0, Buttons.LeftThumbstickUp);
+			down = new VirtualButton().AddKeyboardKey(Keys.D).AddGamePadButton(0, Buttons.LeftThumbstickDown);
+			left = new VirtualButton().AddKeyboardKey(Keys.A).AddGamePadButton(0, Buttons.LeftThumbstickLeft);
+			right = new VirtualButton().AddKeyboardKey(Keys.D).AddGamePadButton(0, Buttons.LeftThumbstickRight);
 
-			drive = new VirtualAxis();
-			drive.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.W, Keys.S));
-			drive.Nodes.Add(new VirtualAxis.GamePadLeftStickY());
+			xAxis = new VirtualAxis();
+			xAxis.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.A, Keys.D));
+			xAxis.Nodes.Add(new VirtualAxis.GamePadLeftStickX());
 
-			steer = new VirtualAxis();
-			steer.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.A, Keys.D));
-			steer.Nodes.Add(new VirtualAxis.GamePadLeftStickX());
+			yAxis = new VirtualAxis();
+			yAxis.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.W, Keys.S));
+			yAxis.Nodes.Add(new VirtualAxis.GamePadLeftStickY());
 
 			shoot = new VirtualButton();
 			shoot.AddMouseLeftButton();

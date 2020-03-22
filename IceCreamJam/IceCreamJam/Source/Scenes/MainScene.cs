@@ -11,6 +11,8 @@ namespace IceCreamJam.Source.Scenes {
 
         public override void Initialize() {
             loader = AddSceneComponent(new TilemapLoader());
+            SetDesignResolution(1280, 720, SceneResolutionPolicy.ShowAll);
+            AddRenderer(new DefaultRenderer());
         }
 
         public override void OnStart() {

@@ -3,54 +3,75 @@ using Nez;
 
 namespace IceCreamJam.Source.Components {
 	class PlayerMovementComponent : Component, IUpdatable {
+		Collider collider;
 		ArcadeRigidbody rb;
 		PlayerDirection direction;
-		
-		private const float acceleration = 1000;
-		private const float deceleration = 600;
 
-		public const float dragConstant = 0.00010f;
-		public const float idleFriction = 0.0007f;
-		public const float turnFriction = 0.69f;
+		public float acceleration = 40f;
+		public float deceleration = 30f;
 
-		public const float minimumSpeed = 50f;
+		public float moveSpeed = 80f;
+		public float maxSpeed = 200f;
+
+		public float targetSpeed = 0f;
+		public Vector2 currentDirectionVector = new Vector2(1, 0);
 
 		public override void OnAddedToEntity() {
-			this.rb = Entity.GetComponent<ArcadeRigidbody>();
+			collider = Entity.GetComponent<Collider>();
+			rb = Entity.GetComponent<ArcadeRigidbody>();
 			direction = Entity.GetComponent<PlayerDirection>();
 		}
 
 		public void Update() {
-			bool? isNorth = InputManager.drive.Value == 0 ? null : (bool?)(InputManager.drive.Value < 0);
-			bool? isWest = InputManager.steer.Value == 0 ? null : (bool?)(InputManager.steer.Value < 0);
-			//Debug.Log((isNorth.HasValue ? isNorth.Value+"" : "null") + " " + (isWest.HasValue ? isWest.Value+"" : "null"));
+			bool? isNorth = InputManager.yAxis.Value == 0 ? null : (bool?)(InputManager.yAxis.Value < 0);
+			bool? isWest = InputManager.xAxis.Value == 0 ? null : (bool?)(InputManager.xAxis.Value < 0);
 			var newDir = NewDirection(isNorth, isWest);
-			if (newDir.HasValue) {
+			if (newDir.HasValue && direction.Direction != newDir.Value) {
 				direction.Direction = newDir.Value;
+				currentDirectionVector = new Vector2(InputManager.xAxis.Value, InputManager.yAxis.Value);
+				currentDirectionVector.Normalize();
+			}
+
+			if (newDir.HasValue) {
+				targetSpeed += acceleration * Time.DeltaTime;
+				if (targetSpeed >= maxSpeed) targetSpeed = maxSpeed;
+			} else {
+				if (targetSpeed > 0) targetSpeed -= deceleration * Time.DeltaTime;
+				if (targetSpeed <= 0) targetSpeed = 0;
+			}
+
+			Vector2 targetVelocity = currentDirectionVector * targetSpeed;
+			rb.Velocity = targetVelocity;
+
+			Vector2 targetMovement = currentDirectionVector * targetSpeed * Time.DeltaTime;
+			if (collider.CollidesWithAny(ref targetMovement, out CollisionResult result)) {
+				if (result.Collider.PhysicsLayer.IsFlagSet((int)Constants.PhysicsLayers.Buildings)) {
+					targetSpeed = 0;
+				}
 			}
 		}
 
-		private PlayerDirection.Direction8? NewDirection(bool? isNorth, bool? isWest) {
+		private Direction8? NewDirection(bool? isNorth, bool? isWest) {
 			if (!isNorth.HasValue && !isWest.HasValue) return null;
 			if (isNorth.HasValue) {
 				if (isNorth.Value) {
 					if (isWest.HasValue) {
-						if (isWest.Value) return PlayerDirection.Direction8.NorthWest;
-						else return PlayerDirection.Direction8.NorthEast;
+						if (isWest.Value) return Direction8.NorthWest;
+						else return Direction8.NorthEast;
 					} else {
-						return PlayerDirection.Direction8.North;
+						return Direction8.North;
 					}
 				} else {
 					if (isWest.HasValue) {
-						if (isWest.Value) return PlayerDirection.Direction8.SouthWest;
-						else return PlayerDirection.Direction8.SouthEast;
+						if (isWest.Value) return Direction8.SouthWest;
+						else return Direction8.SouthEast;
 					} else {
-						return PlayerDirection.Direction8.South;
+						return Direction8.South;
 					}
 				}
 			} else {
-				if (isWest.Value) return PlayerDirection.Direction8.West;
-				else return PlayerDirection.Direction8.East;
+				if (isWest.Value) return Direction8.West;
+				else return Direction8.East;
 			}
 		}
 

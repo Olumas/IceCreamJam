@@ -1,4 +1,5 @@
-﻿using Nez;
+﻿using Microsoft.Xna.Framework;
+using Nez;
 using System;
 
 namespace IceCreamJam.Source.Components {
@@ -14,9 +15,10 @@ namespace IceCreamJam.Source.Components {
 			}
 		}
 
-		public event Action<Direction8> OnDirectionChange;
-		public enum Direction8 {
-			East, SouthEast, South, SouthWest, West, NorthWest, North, NorthEast, 
-		}
+		public event Action<Direction8> OnDirectionChange;	
+	}
+
+	public enum Direction8 {
+		East, SouthEast, South, SouthWest, West, NorthWest, North, NorthEast,
 	}
 }
