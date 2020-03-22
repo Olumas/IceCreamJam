@@ -5,20 +5,18 @@ using System.Collections.Generic;
 
 namespace IceCreamJam.Source.WeaponSystem {
     class WeaponComponent : Component, IUpdatable {
-        public Deque<Weapon> weapons;
-        public Weapon activeWeapon;
-
+        public List<Weapon> weapons;
+        private int weaponIndex = 0;
+        public Weapon ActiveWeapon => weapons[weaponIndex];
         public PlayerAnimationComponent animationComponent;
 
-        public WeaponComponent(params Weapon[] weapons) : this(new Deque<Weapon>(weapons)) { }
+        public WeaponComponent(params Weapon[] weapons) : this(new List<Weapon>(weapons)) { }
 
-        public WeaponComponent(Deque<Weapon> weapons) {
+        public WeaponComponent(List<Weapon> weapons) {
             this.weapons = weapons;
 
             foreach(Weapon w in weapons)
                 w.weaponComponent = this;
-
-            activeWeapon = weapons.Get(0);
         }
 
         public override void OnAddedToEntity() {
@@ -31,23 +29,23 @@ namespace IceCreamJam.Source.WeaponSystem {
         }
 
         public void CycleForward() {
-            activeWeapon.OnUnequipped();
-            activeWeapon = weapons.RemoveFront();
-            activeWeapon.OnEquipped();
-
-            weapons.AddBack(activeWeapon);
+            ActiveWeapon.SetEnabled(false);
+            ActiveWeapon.OnUnequipped();
+            weaponIndex++;
+            ActiveWeapon.SetEnabled(true);
+            ActiveWeapon.OnEquipped();
         }
 
         public void CycleBackwards() {
-            activeWeapon.OnUnequipped();
-            activeWeapon = weapons.RemoveBack();
-            activeWeapon.OnEquipped();
-
-            weapons.AddFront(activeWeapon);
+            ActiveWeapon.SetEnabled(false);
+            ActiveWeapon.OnUnequipped();
+            weaponIndex--;
+            ActiveWeapon.SetEnabled(true);
+            ActiveWeapon.OnEquipped();
         }
 
         public void Shoot() {
-            activeWeapon.Shoot();
+            ActiveWeapon.Shoot();
         }
 
         public void Update() {
