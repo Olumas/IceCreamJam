@@ -7,7 +7,7 @@ namespace IceCreamJam.Source.WeaponSystem {
     class WeaponComponent : Component, IUpdatable {
         public List<Weapon> weapons;
         private int weaponIndex = 0;
-        public Weapon ActiveWeapon => weapons[weaponIndex];
+        public Weapon ActiveWeapon => weapons[Utility.Mod(weaponIndex, weapons.Count)];
         public PlayerAnimationComponent animationComponent;
 
         public WeaponComponent(params Weapon[] weapons) : this(new List<Weapon>(weapons)) { }
@@ -25,7 +25,7 @@ namespace IceCreamJam.Source.WeaponSystem {
             foreach(Weapon w in weapons)
                 Entity.Scene.AddEntity(w);
 
-            activeWeapon.defaultVisible = true;
+            ActiveWeapon.defaultVisible = true;
         }
 
         public void CycleForward() {
@@ -49,6 +49,18 @@ namespace IceCreamJam.Source.WeaponSystem {
         }
 
         public void Update() {
+            UpdateWeapons();
+
+            // Process Input
+            if (InputManager.shoot.IsDown)
+                Shoot();
+            if (InputManager.switchWeapon.Value > 0)
+                CycleForward();
+            if (InputManager.switchWeapon.Value < 0)
+                CycleBackwards();
+        }
+
+        private void UpdateWeapons() {
             if(animationComponent == null)
                 animationComponent = Entity.GetComponent<PlayerAnimationComponent>();
 
@@ -58,16 +70,8 @@ namespace IceCreamJam.Source.WeaponSystem {
             else
                 weaponOffset = new Vector2(0, -16);
 
-            foreach(Weapon w in weapons) {
+            foreach(Weapon w in weapons)
                 w.Position = Entity.Position + weaponOffset;
-            }
-
-            if (InputManager.shoot.IsDown)
-                Shoot();
-            if (InputManager.switchWeapon.Value > 0)
-                CycleForward();
-            if (InputManager.switchWeapon.Value < 0)
-                CycleBackwards();
         }
     }
 }

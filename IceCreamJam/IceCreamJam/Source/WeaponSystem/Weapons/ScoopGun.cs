@@ -31,7 +31,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
             shootFX = Scene.AddEntity(new AnimatedEntity());
             AddFXAnimation();
-            shootFX.ToggleVisible(false);
+            shootFX.ToggleVisible(this.defaultVisible);
         }
 
         private void AddFXAnimation() {
