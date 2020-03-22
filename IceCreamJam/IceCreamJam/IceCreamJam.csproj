@@ -47,7 +47,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Components\PlayerAnimationComponent.cs" />
-    <Compile Include="Source\Components\PlayerCollider.cs" />
     <Compile Include="Source\Components\PlayerDirection.cs" />
     <Compile Include="Source\Components\PlayerMovementComponent.cs" />
     <Compile Include="Source\Constants.cs" />
