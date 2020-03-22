@@ -16,6 +16,7 @@ namespace IceCreamJam.Source.Scenes {
         public override void OnStart() {
             truck = AddEntity(new Truck() { Position = new Vector2(Screen.Width / 2, Screen.Height / 2) } );
             loader.Load(ContentPaths.Test1);
+            Camera.ZoomIn(1.5f);
             Camera.AddComponent(new FollowCamera(truck));
         }
     }

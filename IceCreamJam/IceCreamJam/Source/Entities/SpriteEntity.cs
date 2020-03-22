@@ -3,8 +3,10 @@ using Nez.Sprites;
 
 namespace IceCreamJam.Source.Entities {
     class SpriteEntity : Entity {
-        private string texturePath;
-        private SpriteRenderer renderer;
+        private readonly string texturePath;
+        public SpriteRenderer renderer;
+        public bool defaultVisible = true;
+
         public SpriteEntity(string texturePath) {
             this.texturePath = texturePath;
         }
@@ -14,7 +16,8 @@ namespace IceCreamJam.Source.Entities {
 
             var texture = Scene.Content.LoadTexture(texturePath);
             this.renderer = AddComponent(new SpriteRenderer(texture));
-            renderer.LayerDepth = 0;
+
+            ToggleVisible(defaultVisible);
         }
 
         public void ToggleVisible(bool visible) {

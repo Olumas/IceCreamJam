@@ -9,24 +9,24 @@ namespace IceCreamJam.Source.Components {
 	class PlayerAnimationComponent : Component {
 
 		private List<Sprite> sprites;
-		private SpriteAnimator animator;
+		public SpriteAnimator Animator { get; private set; }
 		private PlayerDirection direction;
 
 		public float idleFPS = 4;
 
 		public override void OnAddedToEntity() {
-			this.animator = Entity.GetComponent<SpriteAnimator>();
+			this.Animator = Entity.GetComponent<SpriteAnimator>();
 			this.sprites = LoadTruckSprites();
 			SetupAnimations();
 
 			this.direction = Entity.GetComponent<PlayerDirection>();
 			direction.OnDirectionChange += this.Direction_OnDirectionChange;
 
-			animator.Play("dir0");
+			Animator.Play("dir0");
 		}
 
 		private void Direction_OnDirectionChange(PlayerDirection.Direction8 newDir) {
-			animator.Play("dir" + (int)newDir);
+			Animator.Play("dir" + (int)newDir);
 		}
 
 		private List<Sprite> LoadTruckSprites() {
@@ -40,7 +40,7 @@ namespace IceCreamJam.Source.Components {
 
 		private void SetupAnimations() {
 			for (int i = 0; i < 8; i++) {
-				animator.AddAnimation("dir" + i, idleFPS, sprites[i * 2], sprites[i * 2 + 1]);
+				Animator.AddAnimation("dir" + i, idleFPS, sprites[i * 2], sprites[i * 2 + 1]);
 				Debug.Log(sprites[i * 2].Texture2D.Name);
 				Debug.Log(sprites[i * 2 + 1].Texture2D.Name);
 			}

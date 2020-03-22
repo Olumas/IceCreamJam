@@ -12,6 +12,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         public float reloadTime;
         public bool canShoot = true;
         public string texturePath;
+        public Vector2 weaponMountOffset;
 
         private ICoroutine reloadCoroutine;
 
@@ -43,14 +44,15 @@ namespace IceCreamJam.Source.WeaponSystem {
                 reloadCoroutine = Core.StartCoroutine(ReloadTimer());
 
                 // Instantiate a projectile using the weapon's projectile type
-                var scene = weaponComponent.Entity.Scene;
-                var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - weaponComponent.Entity.Position);
-                var p = InstantiateProjectile(dir, this.Position);
+                var p = InstantiateProjectile(this.Position);
                 weaponComponent.Entity.Scene.AddEntity(p);
             }
         }
 
-        public virtual Projectile InstantiateProjectile(Vector2 dir, Vector2 pos) {
+        public virtual Projectile InstantiateProjectile(Vector2 pos) {
+            var scene = weaponComponent.Entity.Scene;
+            var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - (weaponComponent.Entity.Position + weaponMountOffset));
+
             var p = (Projectile)Activator.CreateInstance(projectileType, dir);
             p.Position = pos;
             return p;

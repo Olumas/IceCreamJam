@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using IceCreamJam.Source.Components;
+using Microsoft.Xna.Framework;
 using Nez;
 using System.Collections.Generic;
 
@@ -6,6 +7,8 @@ namespace IceCreamJam.Source.WeaponSystem {
     class WeaponComponent : Component, IUpdatable {
         public Deque<Weapon> weapons;
         public Weapon activeWeapon;
+
+        public PlayerAnimationComponent animationComponent;
 
         public WeaponComponent(params Weapon[] weapons) : this(new Deque<Weapon>(weapons)) { }
 
@@ -54,14 +57,20 @@ namespace IceCreamJam.Source.WeaponSystem {
         }
 
         public void Update() {
+            if(animationComponent == null)
+                animationComponent = Entity.GetComponent<PlayerAnimationComponent>();
+
+            if(animationComponent.Animator.CurrentFrame == 1)
+                activeWeapon.Position = Entity.Position + new Vector2(0, -15);
+            else
+                activeWeapon.Position = Entity.Position + new Vector2(0, -16);
+
             if (InputManager.shoot.IsDown)
                 Shoot();
             if (InputManager.switchWeapon.Value > 0)
                 CycleForward();
             if (InputManager.switchWeapon.Value < 0)
                 CycleBackwards();
-
-            activeWeapon.Position = Entity.Position + new Vector2(0, -15);
         }
     }
 }

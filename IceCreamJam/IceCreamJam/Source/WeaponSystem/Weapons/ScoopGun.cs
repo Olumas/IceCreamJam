@@ -1,4 +1,5 @@
-﻿using IceCreamJam.Source.Content;
+﻿using IceCreamJam.Source.Components;
+using IceCreamJam.Source.Content;
 using IceCreamJam.Source.Entities;
 using IceCreamJam.Source.WeaponSystem.Projectiles;
 using Microsoft.Xna.Framework;
@@ -11,20 +12,23 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
         private Scoop.ScoopType type = Scoop.ScoopType.Chocolate;
         private SpriteEntity coneDecal;
+        private EntitySpringComponent coneSpring;
         private AnimatedEntity shootFX;
-
-        private readonly Vector2 BaseOffset = new Vector2(0, -3);
 
         public ScoopGun() {
             this.projectileType = typeof(Scoop);
-            this.name = "ConeShooter";
+            this.name = "ScoopGun";
             this.reloadTime = 0.1f;
             this.texturePath = ContentPaths.Scoop_Base;
+            this.weaponMountOffset = new Vector2(0, -3);
         }
 
         public override void OnAddedToScene() {
             base.OnAddedToScene();
             coneDecal = Scene.AddEntity(new SpriteEntity(ContentPaths.Scoop_Cone));
+            this.coneSpring = coneDecal.AddComponent(new EntitySpringComponent(this, weaponMountOffset, 5));
+            coneDecal.defaultVisible = false;
+
             shootFX = Scene.AddEntity(new AnimatedEntity());
             AddFXAnimation();
             shootFX.ToggleVisible(false);
@@ -32,10 +36,11 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
         private void AddFXAnimation() {
             void AddAnimation(Scoop.ScoopType type) {
-                Sprite[] sprites = new Sprite[3];
+                Sprite[] sprites = new Sprite[4];
 
                 for(int i = 0; i < 3; i++)
                     sprites[i] = new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_{i}{(char)type}.png"));
+                sprites[3] = new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_{0}{(char)Scoop.GetNext(type)}.png"));
 
                 shootFX.animator.AddAnimation(Enum.GetName(typeof(Scoop.ScoopType), type), Constants.GlobalFPS, sprites);
             }
@@ -57,10 +62,17 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             shootFX.ToggleVisible(false);
         }
 
-        public override Projectile InstantiateProjectile(Vector2 dir, Vector2 pos) {
+        public override Projectile InstantiateProjectile(Vector2 pos) {
+            var scene = weaponComponent.Entity.Scene;
+            var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - (coneSpring.TargetPosition));
+
             type = Scoop.GetNext(type);
             var s = new Scoop(dir, type);
-            s.Position = pos + BaseOffset + dir * 4; // Line up scoop with cone
+            s.Position = pos + dir * 4; // Line up scoop with cone
+
+            // Shock the cone
+            coneSpring.Shock(-dir * 3);
+
             return s;
         }
 
@@ -68,23 +80,19 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             base.Shoot();
 
             // Trigger shoot Fx
-            shootFX.animator.Play(Enum.GetName(typeof(Scoop.ScoopType), type), Nez.Sprites.SpriteAnimator.LoopMode.Once);
+            shootFX.animator.Play(Enum.GetName(typeof(Scoop.ScoopType), type), Nez.Sprites.SpriteAnimator.LoopMode.ClampForever);
             shootFX.ToggleVisible(true);
         }
 
         public override void Update() {
             base.Update();
 
-            var basePosition = this.Position + BaseOffset;
             // Update cone and Shoot fx
-            var dir = Vector2.Normalize(Scene.Camera.MouseToWorldPoint() - weaponComponent.Entity.Position);
+            var dir = Vector2.Normalize(Scene.Camera.MouseToWorldPoint() - coneSpring.TargetPosition);
             coneDecal.Rotation = shootFX.Rotation = Mathf.Atan2(dir.Y, dir.X);
-            coneDecal.Position = basePosition;
 
-            shootFX.Position = basePosition + dir * 16;
-
-            if(shootFX.animator.AnimationState == Nez.Sprites.SpriteAnimator.State.Completed)
-                shootFX.ToggleVisible(false);
+            // Offset fx from cone
+            shootFX.Position = coneDecal.Position + dir * 16;
         }
     }
 }
