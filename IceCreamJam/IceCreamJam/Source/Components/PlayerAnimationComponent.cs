@@ -1,9 +1,8 @@
-﻿using Nez;
-using Microsoft.Xna.Framework;
+﻿using IceCreamJam.Source.Content;
+using Nez;
+using Nez.Sprites;
 using Nez.Textures;
 using System.Collections.Generic;
-using IceCreamJam.Source.Content;
-using Nez.Sprites;
 
 namespace IceCreamJam.Source.Components {
 	class PlayerAnimationComponent : Component {
@@ -25,7 +24,7 @@ namespace IceCreamJam.Source.Components {
 		}
 
 		private void Direction_OnDirectionChange(Direction8 newDir) {
-			animator.Play("dir" + (int)newDir);
+			Animator.Play("dir" + (int)newDir);
 		}
 
 		private List<Sprite> LoadTruckSprites() {
@@ -39,7 +38,7 @@ namespace IceCreamJam.Source.Components {
 
 		private void SetupAnimations() {
 			for (int i = 0; i < 8; i++) {
-				animator.AddAnimation("dir" + i, idleFPS, sprites[i * 2], sprites[i * 2 + 1]);
+				Animator.AddAnimation("dir" + i, idleFPS, sprites[i * 2], sprites[i * 2 + 1]);
 			}
 		}
 	}

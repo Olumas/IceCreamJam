@@ -24,29 +24,23 @@ namespace IceCreamJam.Source.WeaponSystem {
         public override void OnAddedToEntity() {
             base.OnAddedToEntity();
 
-            foreach(Weapon w in weapons) {
+            foreach(Weapon w in weapons)
                 Entity.Scene.AddEntity(w);
-                w.SetEnabled(false);
-            }
+
+            activeWeapon.defaultVisible = true;
         }
 
         public void CycleForward() {
-            activeWeapon.SetEnabled(false);
             activeWeapon.OnUnequipped();
-
             activeWeapon = weapons.RemoveFront();
-            activeWeapon.SetEnabled(true);
             activeWeapon.OnEquipped();
 
             weapons.AddBack(activeWeapon);
         }
 
         public void CycleBackwards() {
-            activeWeapon.SetEnabled(false);
             activeWeapon.OnUnequipped();
-
             activeWeapon = weapons.RemoveBack();
-            activeWeapon.SetEnabled(true);
             activeWeapon.OnEquipped();
 
             weapons.AddFront(activeWeapon);
@@ -60,10 +54,15 @@ namespace IceCreamJam.Source.WeaponSystem {
             if(animationComponent == null)
                 animationComponent = Entity.GetComponent<PlayerAnimationComponent>();
 
+            Vector2 weaponOffset;
             if(animationComponent.Animator.CurrentFrame == 1)
-                activeWeapon.Position = Entity.Position + new Vector2(0, -15);
+                weaponOffset = new Vector2(0, -15);
             else
-                activeWeapon.Position = Entity.Position + new Vector2(0, -16);
+                weaponOffset = new Vector2(0, -16);
+
+            foreach(Weapon w in weapons) {
+                w.Position = Entity.Position + weaponOffset;
+            }
 
             if (InputManager.shoot.IsDown)
                 Shoot();

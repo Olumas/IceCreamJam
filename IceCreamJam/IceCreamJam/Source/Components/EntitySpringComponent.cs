@@ -9,6 +9,7 @@ namespace IceCreamJam.Source.Components {
 
         public Entity targetEntity;
         public Vector2 offset;
+        public Vector2 RelativePosition;
         public float tension;
         public Vector2 TargetPosition => targetEntity.Position + offset;
 
@@ -26,11 +27,12 @@ namespace IceCreamJam.Source.Components {
         }
 
         public void Update() {
-            Entity.Position += (TargetPosition - Entity.Position) / tension;
+            RelativePosition += (TargetPosition - (Entity.Position + RelativePosition)) / tension;
+            Entity.Position = TargetPosition + RelativePosition;
         }
 
         public void Shock(Vector2 force) {
-            Entity.Position += force;
+            RelativePosition += force;
         }
     }
 }

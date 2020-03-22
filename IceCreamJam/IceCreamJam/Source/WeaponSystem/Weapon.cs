@@ -14,6 +14,8 @@ namespace IceCreamJam.Source.WeaponSystem {
         public string texturePath;
         public Vector2 weaponMountOffset;
 
+        public bool defaultVisible = false;
+
         private ICoroutine reloadCoroutine;
 
         public Component weaponComponent;
@@ -24,13 +26,23 @@ namespace IceCreamJam.Source.WeaponSystem {
             projectileType = typeof(Projectile);
         }
 
-        public virtual void OnEquipped() { }
-        public virtual void OnUnequipped() { }
+        public virtual void OnEquipped() {
+            SetVisible(true);
+        }
+        public virtual void OnUnequipped() {
+            SetVisible(false);
+        }
+
+        public void SetVisible(bool visible) {
+            if(renderer != null)
+                renderer.SetEnabled(visible);
+        }
 
         public override void OnAddedToScene() {
             base.OnAddedToScene();
 
             InitializeRenderer();
+            SetVisible(defaultVisible);
         }
 
         public virtual void InitializeRenderer() {

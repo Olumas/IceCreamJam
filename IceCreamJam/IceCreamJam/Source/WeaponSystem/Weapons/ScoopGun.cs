@@ -27,7 +27,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             base.OnAddedToScene();
             coneDecal = Scene.AddEntity(new SpriteEntity(ContentPaths.Scoop_Cone));
             this.coneSpring = coneDecal.AddComponent(new EntitySpringComponent(this, weaponMountOffset, 5));
-            coneDecal.defaultVisible = false;
+            coneDecal.defaultVisible = this.defaultVisible;
 
             shootFX = Scene.AddEntity(new AnimatedEntity());
             AddFXAnimation();
@@ -52,6 +52,9 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
         public override void OnEquipped() {
             base.OnEquipped();
+            coneDecal.Position = coneSpring.TargetPosition;
+            coneSpring.RelativePosition = Vector2.Zero;
+
             coneDecal.ToggleVisible(true);
             shootFX.ToggleVisible(true);
         }
@@ -92,7 +95,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             coneDecal.Rotation = shootFX.Rotation = Mathf.Atan2(dir.Y, dir.X);
 
             // Offset fx from cone
-            shootFX.Position = coneDecal.Position + dir * 16;
+            shootFX.Position = coneSpring.TargetPosition + coneSpring.RelativePosition + dir * 16;
         }
     }
 }
