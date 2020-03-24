@@ -19,7 +19,10 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         }
 
         public override void SetupTextures() {
-            var animator = AddComponent(new SpriteAnimator());
+            var animator = AddComponent(new SpriteAnimator() {
+                RenderLayer = Constants.Layer_Bullets
+            });
+
             animator.AddAnimation("Fly", Constants.GlobalFPS,
                 new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + "Scoop_0" + (char)this.type + ".png")),
                 new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + "Scoop_1" + (char)this.type + ".png"))

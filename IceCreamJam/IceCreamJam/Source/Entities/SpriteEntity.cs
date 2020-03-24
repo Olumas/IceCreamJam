@@ -1,22 +1,19 @@
-﻿using Nez;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Nez;
 using Nez.Sprites;
 
 namespace IceCreamJam.Source.Entities {
     class SpriteEntity : Entity {
-        private readonly string texturePath;
         public SpriteRenderer renderer;
         public bool defaultVisible = true;
 
-        public SpriteEntity(string texturePath) {
-            this.texturePath = texturePath;
-        }
+        public SpriteEntity(Texture2D texture) : this(texture, 0, 0) { }
 
-        public override void OnAddedToScene() {
-            base.OnAddedToScene();
-
-            var texture = Scene.Content.LoadTexture(texturePath);
-            this.renderer = AddComponent(new SpriteRenderer(texture));
-
+        public SpriteEntity(Texture2D texture, int renderLayer, float layerDepth) {
+            this.renderer = AddComponent(new SpriteRenderer(texture) {
+                RenderLayer = renderLayer,
+                LayerDepth = layerDepth
+            });
             ToggleVisible(defaultVisible);
         }
 
