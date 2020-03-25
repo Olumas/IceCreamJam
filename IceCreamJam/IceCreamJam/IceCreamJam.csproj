@@ -54,6 +54,7 @@
     <Compile Include="Source\Content\ContentPaths.cs" />
     <Compile Include="Source\Entities\AnimatedEntity.cs" />
     <Compile Include="Source\Entities\Building.cs" />
+    <Compile Include="Source\Entities\NPC.cs" />
     <Compile Include="Source\Entities\SpriteEntity.cs" />
     <Compile Include="Source\Entities\Truck.cs" />
     <Compile Include="Source\InputManager.cs" />
@@ -144,6 +145,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Sprites\Empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\truckcollision.txt" />
