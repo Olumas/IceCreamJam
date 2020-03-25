@@ -37,13 +37,9 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
         private void AddFXAnimation() {
             void AddAnimation(Scoop.ScoopType type) {
-                Sprite[] sprites = new Sprite[4];
-
-                for(int i = 0; i < 3; i++)
-                    sprites[i] = new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_{i}{(char)type}.png"));
-                sprites[3] = new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_{0}{(char)Scoop.GetNext(type)}.png"));
-
-                shootFX.animator.AddAnimation(Enum.GetName(typeof(Scoop.ScoopType), type), Constants.GlobalFPS, sprites);
+                var texture = Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_{(char)type}.png");
+                var sprites = Sprite.SpritesFromAtlas(texture, 8, 23);
+                shootFX.animator.AddAnimation(Enum.GetName(typeof(Scoop.ScoopType), type), Constants.GlobalFPS, sprites.ToArray());
             }
 
             AddAnimation(Scoop.ScoopType.Chocolate);

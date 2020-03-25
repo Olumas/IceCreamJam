@@ -23,13 +23,11 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
                 RenderLayer = Constants.Layer_Bullets
             });
 
-            animator.AddAnimation("Fly", Constants.GlobalFPS,
-                new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + "Scoop_0" + (char)this.type + ".png")),
-                new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + "Scoop_1" + (char)this.type + ".png"))
-            );
+            var texture = Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_{(char)type}.png");
+            var sprites = Sprite.SpritesFromAtlas(texture, 20, 9, 0);
 
+            animator.AddAnimation("Fly", Constants.GlobalFPS, sprites.ToArray());
             animator.Play("Fly", SpriteAnimator.LoopMode.Loop);
-
             this.renderer = animator;
         }
 
@@ -47,11 +45,14 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             dir.Normalize();
             hitFX.Rotation = Mathf.Atan2(dir.Y, dir.X);
 
+            var texture = Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_{(char)type}.png");
+            var sprites = Sprite.SpritesFromAtlas(texture, 8, 23);
+
             hitFX.animator.AddAnimation("hit", Constants.GlobalFPS,
                 new Sprite(Scene.Content.LoadTexture(ContentPaths.Sprites + "Empty.png")),
-                new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_1{(char)type}.png")),
-                new Sprite(Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_2{(char)type}.png"))
-            ); ;
+                sprites[1],
+                sprites[2]
+            );
 
             hitFX.animator.Play("hit", SpriteAnimator.LoopMode.Once);
             hitFX.animator.OnAnimationCompletedEvent += (s) => hitFX.Destroy();
