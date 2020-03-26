@@ -11,6 +11,11 @@
         public const string NPC = Sprites + "NPC/";
         #endregion
 
+        #region Enemies
+        public const string Enemies = Sprites + "Enemies/";
+        public const string Doctor = Enemies + "Doctor/";
+        #endregion
+
         #region Weapons
         public const string Weapons = Sprites + "Weapons/";
         public const string TestProjectile = Weapons + "TestProjectile.png";
@@ -23,6 +28,7 @@
         public const string Popsicle = Weapons + "Popsicle/";
         public const string Popsicle_Base = Popsicle + "Popsicle_Base.png";
         public const string Popsicle_Stick = Popsicle + "Popsicle_Stick.png";
+        public const string Popsicle_Shatter = Popsicle + "Popsicle_Shatter.png";
         #endregion
 
         #region Maps

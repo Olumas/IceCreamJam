@@ -26,8 +26,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             var texture = Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_{(char)type}.png");
             var sprites = Sprite.SpritesFromAtlas(texture, 20, 9, 0);
 
-            animator.AddAnimation("Fly", Constants.GlobalFPS, sprites.ToArray());
-            animator.Play("Fly", SpriteAnimator.LoopMode.Loop);
+            animator.AddAnimation("Fly", Constants.GlobalFPS, sprites.ToArray()).Play("Fly");
             this.renderer = animator;
         }
 
