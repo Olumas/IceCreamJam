@@ -4,7 +4,7 @@ using System;
 
 namespace IceCreamJam.Source.Components {
 	class PlayerDirection : Component {
-		private Direction8 direction = Direction8.West;
+		private Direction8 direction;
 
 		internal Direction8 Direction {
 			get => this.direction; set {

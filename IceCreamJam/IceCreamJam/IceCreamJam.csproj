@@ -46,12 +46,14 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Components\ColliderManager.cs" />
     <Compile Include="Source\Components\EntitySpringComponent.cs" />
     <Compile Include="Source\Components\HomingTargetComponent.cs" />
     <Compile Include="Source\Components\PlayerAnimationComponent.cs" />
     <Compile Include="Source\Components\PlayerDirection.cs" />
     <Compile Include="Source\Components\PlayerMovementComponent.cs" />
     <Compile Include="Source\Constants.cs" />
+    <Compile Include="Source\Content\ContentManagerExt.cs" />
     <Compile Include="Source\Content\ContentPaths.cs" />
     <Compile Include="Source\Entities\AnimatedEntity.cs" />
     <Compile Include="Source\Entities\Building.cs" />
@@ -142,6 +144,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nez\Nez.Persistence\Nez.Persistence.csproj">
+      <Project>{993d8b1c-e786-44d5-aa9e-ed747d4e94b7}</Project>
+      <Name>Nez.Persistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nez\Nez.Portable\Nez.csproj">
       <Project>{85150cf9-2e0b-462e-9086-c3ef4fb6a345}</Project>
       <Name>Nez</Name>
@@ -178,7 +184,9 @@
     <Content Include="Content\Sprites\NPC\NPC4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\truckcollision.txt" />
+    <Content Include="Content\truckcollision.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Sprites\Truck\7b.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
