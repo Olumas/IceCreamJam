@@ -19,6 +19,10 @@
         public const string Scoop = Weapons + "Scoop/";
         public const string Scoop_Base = Scoop + "Scoop_Base.png";
         public const string Scoop_Cone = Scoop + "Scoop_Cone.png";
+
+        public const string Popsicle = Weapons + "Popsicle/";
+        public const string Popsicle_Base = Popsicle + "Popsicle_Base.png";
+        public const string Popsicle_Stick = Popsicle + "Popsicle_Stick.png";
         #endregion
 
         #region Maps

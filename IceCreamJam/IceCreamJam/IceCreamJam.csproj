@@ -62,6 +62,7 @@
     <Compile Include="Source\TilemapLoader.cs" />
     <Compile Include="Source\Utility.cs" />
     <Compile Include="Source\WeaponSystem\Projectile.cs" />
+    <Compile Include="Source\WeaponSystem\Projectiles\Popsicle.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\Scoop.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\TestProjectile2.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\TestProjectile.cs" />
@@ -164,6 +165,15 @@
     </Content>
     <Content Include="Content\Sprites\truckcollision.txt" />
     <Content Include="Content\Sprites\Truck\7b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Popsicle\Popsicle_Base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Popsicle\Popsicle_Fly.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Popsicle\Popsicle_Stick.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Weapons\Scoop\Scoop_C.png">
