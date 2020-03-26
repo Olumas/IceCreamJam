@@ -1,4 +1,5 @@
 ﻿using IceCreamJam.Source.Content;
+using Nez;
 using Nez.Sprites;
 using Nez.Textures;
 
@@ -9,6 +10,14 @@ namespace IceCreamJam.Source.Entities.Enemies {
         }
 
         public override void OnAddedToScene() {
+            base.OnAddedToScene();
+            SetupAnimations();
+
+            var b = AddComponent(new BoxCollider());
+            b.PhysicsLayer = (int)Constants.PhysicsLayers.NPC;
+        }
+
+        private void SetupAnimations() {
             var animator = new SpriteAnimator();
 
             var runTexture = Scene.Content.LoadTexture(ContentPaths.Doctor + "DocRun.png");

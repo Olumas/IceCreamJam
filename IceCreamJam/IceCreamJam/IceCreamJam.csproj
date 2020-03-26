@@ -57,10 +57,12 @@
     <Compile Include="Source\Entities\NPC.cs" />
     <Compile Include="Source\Entities\SpriteEntity.cs" />
     <Compile Include="Source\Entities\Truck.cs" />
+    <Compile Include="Source\Systems\HomingProjectileSystem.cs" />
     <Compile Include="Source\InputManager.cs" />
     <Compile Include="Source\Scenes\MainScene.cs" />
     <Compile Include="Source\TilemapLoader.cs" />
     <Compile Include="Source\Utility.cs" />
+    <Compile Include="Source\WeaponSystem\HomingProjectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\Popsicle.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\Scoop.cs" />

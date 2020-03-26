@@ -1,8 +1,10 @@
-﻿using IceCreamJam.Source.Entities;
-using Nez;
-using Microsoft.Xna.Framework;
+﻿using IceCreamJam.Source.Components;
 using IceCreamJam.Source.Content;
+using IceCreamJam.Source.Entities;
 using IceCreamJam.Source.Entities.Enemies;
+using IceCreamJam.Source.Systems;
+using Microsoft.Xna.Framework;
+using Nez;
 
 namespace IceCreamJam.Source.Scenes {
     class MainScene : Scene {
@@ -14,6 +16,8 @@ namespace IceCreamJam.Source.Scenes {
             loader = AddSceneComponent(new TilemapLoader());
             SetDesignResolution(1280, 720, SceneResolutionPolicy.ShowAll);
             AddRenderer(new DefaultRenderer());
+
+            AddEntityProcessor(new HomingProjectileSystem(new Matcher().All(typeof(HomingTargetComponent))));
         }
 
         public override void OnStart() {

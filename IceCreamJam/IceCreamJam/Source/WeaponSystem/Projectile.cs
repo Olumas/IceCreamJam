@@ -1,5 +1,4 @@
-﻿using IceCreamJam.Source.Entities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
 
@@ -57,7 +56,7 @@ namespace IceCreamJam.Source.WeaponSystem {
             var vector = CalculateVector();
             moveComponent.Move(vector, out var collisionResult);
 
-            if(collisionResult.Collider != null && collisionResult.Collider.Entity.GetType() == typeof(Building)) {
+            if(collisionResult.Collider != null) {
                 OnHit();
             }
 
