@@ -4,12 +4,15 @@ using IceCreamJam.Source.WeaponSystem.Projectiles;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Textures;
+using System.Collections;
 
 namespace IceCreamJam.Source.WeaponSystem.Weapons {
     class PopsicleGun : Weapon {
 
         private AnimatedEntity shatterFX;
         private SpriteEntity loadedPopsicle;
+        private ICoroutine reformCoroutine;
+        private float reformTime; // Time before the popsicle reforms 
 
         public PopsicleGun() {
             this.projectileType = typeof(Popsicle);
@@ -28,24 +31,27 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
             this.shatterFX = Scene.AddEntity(new AnimatedEntity());
             AddFXAnimation();
-            shatterFX.ToggleVisible(this.defaultVisible);
+            shatterFX.ToggleVisible(false);
             shatterFX.animator.RenderLayer = Constants.Layer_Weapon;
             shatterFX.animator.LayerDepth = 0.4f;
-            shatterFX.animator.OnAnimationCompletedEvent += (s) => LoadNewPopsicle();
+            shatterFX.animator.OnAnimationCompletedEvent += (s) => ReloadPopsicle();
         }
 
         private void AddFXAnimation() {
             var texture = Scene.Content.LoadTexture(ContentPaths.Popsicle_Shatter);
             var sprites = Sprite.SpritesFromAtlas(texture, 26, 23);
+
             sprites.Reverse();
-            shatterFX.animator.AddAnimation("Shatter", Constants.GlobalFPS * 4, sprites.ToArray());
+            shatterFX.animator.AddAnimation("Reform", Constants.GlobalFPS * 4, sprites.ToArray());
+
+            reformTime = reloadTime - (sprites.Count / Constants.GlobalFPS * 4);
         }
 
         public override Projectile InstantiateProjectile(Vector2 pos) {
             var scene = weaponComponent.Entity.Scene;
             var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - (this.Position));
 
-            return new Popsicle(dir) { Position = this.Position };
+            return new Popsicle(dir) { Position = this.Position + this.weaponMountOffset };
         }
 
         public override void OnUnequipped() {
@@ -54,18 +60,26 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             loadedPopsicle.ToggleVisible(false);
         }
 
-        public override void Shoot() {
+        public override void OnShoot() {
             base.Shoot();
 
-            loadedPopsicle.ToggleVisible(false);
-
-            shatterFX.ToggleVisible(true);
-            shatterFX.animator.Play("Shatter", Nez.Sprites.SpriteAnimator.LoopMode.Once);
+            if(reformCoroutine != null)
+                reformCoroutine.Stop();
+            reformCoroutine = Core.StartCoroutine(ReloadTimer());
         }
 
-        private void LoadNewPopsicle() {
-            loadedPopsicle.ToggleVisible(true);
+        IEnumerator ReloadTimer() {
+            loadedPopsicle.ToggleVisible(false);
+            yield return Coroutine.WaitForSeconds(reformTime);
+            // Reform popsicle
+            shatterFX.ToggleVisible(true);
+            shatterFX.animator.Play("Reform", Nez.Sprites.SpriteAnimator.LoopMode.Once);
+            loadedPopsicle.ToggleVisible(false);
+        }
+
+        private void ReloadPopsicle() {
             shatterFX.ToggleVisible(false);
+            loadedPopsicle.ToggleVisible(!InputManager.shoot.IsDown);
         }
 
         public override void Update() {

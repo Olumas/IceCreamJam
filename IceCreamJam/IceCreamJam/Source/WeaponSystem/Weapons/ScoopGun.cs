@@ -20,7 +20,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             this.name = "ScoopGun";
             this.reloadTime = 0.1f;
             this.texturePath = ContentPaths.Scoop_Base;
-            this.weaponMountOffset = new Vector2(0, -3);
+            this.weaponMountOffset = new Vector2(0, -5);
         }
 
         public override void OnAddedToScene() {
@@ -28,7 +28,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             var coneTexture = Scene.Content.LoadTexture(ContentPaths.Scoop_Cone);
             coneDecal = Scene.AddEntity(new SpriteEntity(coneTexture, Constants.Layer_Weapon, 0.5f));
             this.coneSpring = coneDecal.AddComponent(new EntitySpringComponent(this, weaponMountOffset, 5));
-            coneDecal.defaultVisible = this.defaultVisible;
+            coneDecal.ToggleVisible(this.defaultVisible);
 
             shootFX = Scene.AddEntity(new AnimatedEntity());
             AddFXAnimation();
@@ -71,7 +71,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
             type = Scoop.GetNext(type);
             var s = new Scoop(dir, type);
-            s.Position = pos + dir * 4; // Line up scoop with cone
+            s.Position = pos + this.weaponMountOffset + dir * 4; // Line up scoop with cone
 
             // Shock the cone
             coneSpring.Shock(-dir * 3);
@@ -95,7 +95,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             coneDecal.Rotation = shootFX.Rotation = Mathf.Atan2(dir.Y, dir.X);
 
             // Offset fx from cone
-            shootFX.Position = coneSpring.TargetPosition + coneSpring.RelativePosition + dir * 16;
+            shootFX.Position = coneSpring.TargetPosition + coneSpring.RelativePosition + dir * 8;
         }
     }
 }

@@ -60,8 +60,12 @@ namespace IceCreamJam.Source.WeaponSystem {
                 // Instantiate a projectile using the weapon's projectile type
                 var p = InstantiateProjectile(this.Position);
                 weaponComponent.Entity.Scene.AddEntity(p);
+
+                OnShoot();
             }
         }
+
+        public virtual void OnShoot() { }
 
         public virtual Projectile InstantiateProjectile(Vector2 pos) {
             var scene = weaponComponent.Entity.Scene;

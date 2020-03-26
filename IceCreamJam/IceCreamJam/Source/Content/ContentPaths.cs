@@ -4,6 +4,7 @@
         public const string Sprites = Content + "Sprites/";
 
         public const string BoxSprite = Sprites + "Box.png";
+        public const string EmptySprite = Sprites + "Empty.png";
 
         public const string Truck = Sprites + "Truck/";
 
