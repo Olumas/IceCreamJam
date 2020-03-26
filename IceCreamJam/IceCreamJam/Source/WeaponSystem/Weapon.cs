@@ -15,11 +15,8 @@ namespace IceCreamJam.Source.WeaponSystem {
         public Vector2 weaponMountOffset;
 
         public bool defaultVisible = false;
-
         private ICoroutine reloadCoroutine;
-
         public Component weaponComponent;
-
         public RenderableComponent renderer;
 
         public Weapon() {
@@ -47,7 +44,12 @@ namespace IceCreamJam.Source.WeaponSystem {
 
         public virtual void InitializeRenderer() {
             var texture = Scene.Content.LoadTexture(texturePath);
-            this.renderer = AddComponent(new SpriteRenderer(texture));
+            this.renderer = new SpriteRenderer(texture) {
+                RenderLayer = Constants.Layer_Weapon,
+                LayerDepth = 1f
+            };
+
+            AddComponent(renderer);
         }
 
         public virtual void Shoot() {

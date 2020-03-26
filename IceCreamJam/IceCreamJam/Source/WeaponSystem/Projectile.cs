@@ -35,7 +35,9 @@ namespace IceCreamJam.Source.WeaponSystem {
 
         public virtual void SetupTextures() {
             var texture = Scene.Content.LoadTexture(texturePath);
-            this.renderer = AddComponent(new SpriteRenderer(texture));
+            this.renderer = AddComponent(new SpriteRenderer(texture) {
+                RenderLayer = Constants.Layer_Bullets
+            });
         }
 
         // Override this to instantiate sub-projectiles

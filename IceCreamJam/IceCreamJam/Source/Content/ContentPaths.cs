@@ -7,6 +7,10 @@
 
         public const string Truck = Sprites + "Truck/";
 
+        #region NPC
+        public const string NPC = Sprites + "NPC/";
+        #endregion
+
         #region Weapons
         public const string Weapons = Sprites + "Weapons/";
         public const string TestProjectile = Weapons + "TestProjectile.png";

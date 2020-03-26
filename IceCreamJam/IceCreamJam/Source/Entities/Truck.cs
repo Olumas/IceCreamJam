@@ -14,8 +14,11 @@ namespace IceCreamJam.Source.Entities {
 
 			AddComponent(new PlayerDirection());
 
-			AddComponent(new SpriteAnimator());
+			var animator = AddComponent(new SpriteAnimator());
 			AddComponent(new PlayerAnimationComponent());
+
+			animator.RenderLayer = Constants.Layer_Truck;
+			animator.LayerDepth = 1;
 
 			//var collider = AddComponent(new BoxCollider());
 			var collider = AddComponent(new PolygonCollider());

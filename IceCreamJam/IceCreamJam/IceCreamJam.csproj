@@ -54,6 +54,7 @@
     <Compile Include="Source\Content\ContentPaths.cs" />
     <Compile Include="Source\Entities\AnimatedEntity.cs" />
     <Compile Include="Source\Entities\Building.cs" />
+    <Compile Include="Source\Entities\NPC.cs" />
     <Compile Include="Source\Entities\SpriteEntity.cs" />
     <Compile Include="Source\Entities\Truck.cs" />
     <Compile Include="Source\InputManager.cs" />
@@ -143,59 +144,50 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Sprites\Empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\NPC\NPC4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Sprites\truckcollision.txt" />
     <Content Include="Content\Sprites\Truck\7b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_C.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Weapons\Scoop\Scoop_Cone.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_0C.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_0S.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_0V.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_1C.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_1S.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_1V.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Sprites\Weapons\Scoop\Scoop_Base.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_0C.png">
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_C.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_0S.png">
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_S.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_0V.png">
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_V.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_1C.png">
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_S.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_1S.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_1V.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_2C.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_2S.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_FX_2V.png">
+    <Content Include="Content\Sprites\Weapons\Scoop\Scoop_V.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Weapons\TestProjectile2.png">
