@@ -21,7 +21,7 @@ namespace IceCreamJam.Source.Components {
 
 		string file;
 		int colliderIndex;
-		List<Polygon> shapes;
+		List<Vector2[]> polygons;
 
 		public ColliderManager(string file, int startingIndex = 0) {
 			this.file = file;
@@ -38,7 +38,7 @@ namespace IceCreamJam.Source.Components {
 		}
 
 		public override void OnAddedToEntity() {
-			shapes = Entity.Scene.Content.LoadPolygons(file);
+			polygons = Entity.Scene.Content.LoadPolygons(file);
 
 			if (collider == null)
 				this.collider = Entity.GetComponent<PolygonCollider>();
@@ -50,7 +50,7 @@ namespace IceCreamJam.Source.Components {
 
 		public void SetIndex(int i) {
 			colliderIndex = i;
-			((Polygon)collider.Shape).SetPoints(shapes[colliderIndex].Points);
+			((Polygon)collider.Shape).SetPoints(polygons[colliderIndex]);
 		}
 	}
 }
