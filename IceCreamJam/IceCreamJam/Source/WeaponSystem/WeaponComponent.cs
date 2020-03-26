@@ -7,7 +7,7 @@ namespace IceCreamJam.Source.WeaponSystem {
     class WeaponComponent : Component, IUpdatable {
         public List<Weapon> weapons;
         private int weaponIndex = 0;
-        public Weapon ActiveWeapon => weapons[Utility.Mod(weaponIndex, weapons.Count)];
+        public Weapon ActiveWeapon => weapons[weaponIndex];
         public PlayerAnimationComponent animationComponent;
 
         public WeaponComponent(params Weapon[] weapons) : this(new List<Weapon>(weapons)) { }
@@ -31,7 +31,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         public void CycleForward() {
             ActiveWeapon.SetEnabled(false);
             ActiveWeapon.OnUnequipped();
-            weaponIndex++;
+            weaponIndex = Utility.Mod(weaponIndex + 1, weapons.Count);
             ActiveWeapon.SetEnabled(true);
             ActiveWeapon.OnEquipped();
         }
@@ -39,7 +39,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         public void CycleBackwards() {
             ActiveWeapon.SetEnabled(false);
             ActiveWeapon.OnUnequipped();
-            weaponIndex--;
+            weaponIndex = Utility.Mod(weaponIndex - 1, weapons.Count);
             ActiveWeapon.SetEnabled(true);
             ActiveWeapon.OnEquipped();
         }
