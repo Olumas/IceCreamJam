@@ -2,30 +2,29 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace IceCreamJam {
     public class Game1 : Nez.Core {
         public Game1() {
             Content.RootDirectory = "Content";
+
+            // old reformatting json stuff
+            //Vector2[][] d;
+            //using (var reader = File.OpenText("../../../../Content/truckcollision.json")) {
+            //    d = Nez.Persistence.Json.FromJson<Vector2[][]>(reader.ReadToEnd());
+            //}
+
+            //using (var stream = File.Open("../../../../Content/truckcollision.json", FileMode.Truncate))
+            //using (StreamWriter sr = new StreamWriter(stream)) {
+            //    string json = Nez.Persistence.Json.ToJson(d, false);
+            //    sr.Write(json);
+            //}
         }
 
         protected override void Initialize() {
             base.Initialize();
             Scene = new MainScene();
-        }
-
-        protected override void UnloadContent() { }
-
-        protected override void Update(GameTime gameTime) {
-            if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            base.Update(gameTime);
-        }
-
-        protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            base.Draw(gameTime);
         }
     }
 }

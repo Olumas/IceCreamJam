@@ -20,7 +20,6 @@ namespace IceCreamJam.Source.Components {
 
 			this.direction = Entity.GetComponent<PlayerDirection>();
 			direction.OnDirectionChange += this.Direction_OnDirectionChange;
-			Direction_OnDirectionChange(direction.Direction);
 		}
 
 		private void Direction_OnDirectionChange(Direction8 newDir) {
@@ -40,6 +39,10 @@ namespace IceCreamJam.Source.Components {
 			for (int i = 0; i < 8; i++) {
 				Animator.AddAnimation("dir" + i, idleFPS, sprites[i * 2], sprites[i * 2 + 1]);
 			}
+		}
+
+		public override void OnEnabled() {
+			Direction_OnDirectionChange(direction.Direction);
 		}
 	}
 }
