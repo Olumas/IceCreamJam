@@ -45,7 +45,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         public virtual void InitializeRenderer() {
             var texture = Scene.Content.LoadTexture(texturePath);
             this.renderer = new SpriteRenderer(texture) {
-                RenderLayer = Constants.Layer_Weapon,
+                RenderLayer = Constants.Layer_WeaponBase,
                 LayerDepth = 1f
             };
 

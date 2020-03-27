@@ -21,10 +21,11 @@ namespace IceCreamJam.Source.WeaponSystem {
             homingSystem.projectiles.Add(this);
         }
 
-        public override void OnHit() {
-            base.OnHit();
+        public override void OnHit(CollisionResult result) {
+            base.OnHit(result);
             homingSystem.projectiles.Remove(this);
         }
+
         public override Vector2 CalculateVector() {
             return targetHeading * speed;
         }

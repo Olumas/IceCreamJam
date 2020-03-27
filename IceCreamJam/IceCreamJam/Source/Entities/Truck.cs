@@ -2,10 +2,8 @@
 using IceCreamJam.Source.Content;
 using IceCreamJam.Source.WeaponSystem;
 using IceCreamJam.Source.WeaponSystem.Weapons;
-using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
-using System.IO;
 
 namespace IceCreamJam.Source.Entities {
 	class Truck : Entity {

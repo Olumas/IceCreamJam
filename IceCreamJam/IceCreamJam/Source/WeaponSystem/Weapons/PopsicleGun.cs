@@ -26,13 +26,13 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             base.OnAddedToScene();
 
             var popsicleTexture = Scene.Content.LoadTexture(ContentPaths.Popsicle + "Popsicle_Basic.png");
-            this.loadedPopsicle = Scene.AddEntity(new SpriteEntity(popsicleTexture, Constants.Layer_Weapon, 0.5f));
+            this.loadedPopsicle = Scene.AddEntity(new SpriteEntity(popsicleTexture, Constants.Layer_WeaponOver, 0.5f));
             this.loadedPopsicle.ToggleVisible(this.defaultVisible);
 
             this.shatterFX = Scene.AddEntity(new AnimatedEntity());
             AddFXAnimation();
             shatterFX.ToggleVisible(false);
-            shatterFX.animator.RenderLayer = Constants.Layer_Weapon;
+            shatterFX.animator.RenderLayer = Constants.Layer_WeaponOver;
             shatterFX.animator.LayerDepth = 0.4f;
             shatterFX.animator.OnAnimationCompletedEvent += (s) => ReloadPopsicle();
         }
@@ -44,7 +44,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             sprites.Reverse();
             shatterFX.animator.AddAnimation("Reform", Constants.GlobalFPS * 4, sprites.ToArray());
 
-            reformTime = reloadTime - (sprites.Count / Constants.GlobalFPS * 4);
+            reformTime = reloadTime - (sprites.Count / (Constants.GlobalFPS * 4));
         }
 
         public override Projectile InstantiateProjectile(Vector2 pos) {
@@ -63,8 +63,6 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
         public override void OnShoot() {
             base.Shoot();
 
-            if(reformCoroutine != null)
-                reformCoroutine.Stop();
             reformCoroutine = Core.StartCoroutine(ReloadTimer());
         }
 
@@ -86,7 +84,8 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             base.Update();
             var dir = Vector2.Normalize(Scene.Camera.MouseToWorldPoint() - this.Position);
             shatterFX.Rotation = loadedPopsicle.Rotation = Mathf.Atan2(dir.Y, dir.X);
-            shatterFX.Position = loadedPopsicle.Position = this.Position + this.weaponMountOffset; // (dir * 10);
+            loadedPopsicle.Position = this.Position + this.weaponMountOffset;
+            shatterFX.Position = loadedPopsicle.Position + dir * 3;
         }
     }
 }

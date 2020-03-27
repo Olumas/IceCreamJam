@@ -25,7 +25,8 @@ namespace IceCreamJam.Source.WeaponSystem {
             base.OnAddedToScene();
 
             SetupTextures();
-            var b = AddComponent(new BoxCollider());
+            var b = AddComponent(new CircleCollider(4));
+            b.LocalOffset = new Vector2(5, 0);
             b.PhysicsLayer = (int)Constants.PhysicsLayers.PlayerProjectiles;
             b.CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC);
 
@@ -39,12 +40,10 @@ namespace IceCreamJam.Source.WeaponSystem {
             });
         }
 
-        // Override this to instantiate sub-projectiles
-        public virtual void OnHit() {
-            this.Destroy();
-        }
-
-        // Calculate path (straight, boomerang, homing, aoe, etc)
+        /// <summary>
+        /// Calculate path (straight, boomerang, homing, aoe, etc)
+        /// </summary>
+        /// <returns>The vector to move the projectile by</returns>
         public abstract Vector2 CalculateVector();
 
         public override void Update() {
@@ -56,12 +55,15 @@ namespace IceCreamJam.Source.WeaponSystem {
             var vector = CalculateVector();
             moveComponent.Move(vector, out var collisionResult);
 
-            if(collisionResult.Collider != null) {
-                OnHit();
-            }
+            if(collisionResult.Collider != null)
+                OnHit(collisionResult);
+        }
 
-            // TODO: Check if other is enemy using collisionResult
-            // If so, call OnHit();
+        /// <summary>
+        /// Override this to instantiate sub-projectiles
+        /// </summary>
+        public virtual void OnHit(CollisionResult result) {
+            this.Destroy();
         }
     }
 }

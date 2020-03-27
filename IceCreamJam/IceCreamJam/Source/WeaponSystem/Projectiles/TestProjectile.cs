@@ -1,5 +1,6 @@
 ﻿using IceCreamJam.Source.Content;
 using Microsoft.Xna.Framework;
+using Nez;
 
 namespace IceCreamJam.Source.WeaponSystem.Projectiles {
     class TestProjectile : Projectile {
@@ -15,9 +16,9 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             return direction * speed;
         }
 
-        public override void OnHit() {
+        public override void OnHit(CollisionResult result) {
             Scene.AddEntity(new TestProjectile(-direction) { Position = this.Position });
-            base.OnHit();
+            base.OnHit(result);
         }
     }
 }

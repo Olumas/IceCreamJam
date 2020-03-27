@@ -34,13 +34,11 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             return direction * speed;
         }
 
-        public override void OnHit() {
-            base.OnHit();
-
+        public override void OnHit(CollisionResult result) {
             var hitFX = Scene.AddEntity(new AnimatedEntity());
 
             hitFX.Position = this.Position;
-            var dir = -direction;
+            var dir = result.Normal;
             dir.Normalize();
             hitFX.Rotation = Mathf.Atan2(dir.Y, dir.X);
 
@@ -55,6 +53,9 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
 
             hitFX.animator.Play("hit", SpriteAnimator.LoopMode.Once);
             hitFX.animator.OnAnimationCompletedEvent += (s) => hitFX.Destroy();
+
+            // Destroy the parent scoop
+            base.OnHit(result);
         }
 
         public static ScoopType GetNext(ScoopType t) {
