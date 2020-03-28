@@ -27,12 +27,7 @@ namespace IceCreamJam.Source.Components {
 		}
 
 		private List<Sprite> LoadTruckSprites() {
-			var sprites = new List<Sprite>();
-			for (int i = 0; i < 8; i++) {
-				sprites.Add(new Sprite(Entity.Scene.Content.LoadTexture(ContentPaths.Truck + i + "a.png")));
-				sprites.Add(new Sprite(Entity.Scene.Content.LoadTexture(ContentPaths.Truck + i + "b.png")));
-			}
-			return sprites;
+			return Sprite.SpritesFromAtlas(Entity.Scene.Content.LoadTexture(ContentPaths.Truck + "truck.png"), 64, 64);
 		}
 
 		private void SetupAnimations() {
