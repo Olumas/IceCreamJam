@@ -38,17 +38,13 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             var hitFX = Scene.AddEntity(new AnimatedEntity());
 
             hitFX.Position = this.Position;
-            var dir = result.Normal;
-            dir.Normalize();
-            hitFX.Rotation = Mathf.Atan2(dir.Y, dir.X);
+            hitFX.Rotation = Random.NextAngle();
 
-            var texture = Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_FX_{(char)type}.png");
-            var sprites = Sprite.SpritesFromAtlas(texture, 8, 23);
+            var texture = Scene.Content.LoadTexture(ContentPaths.Scoop_Splat);
+            var sprites = Sprite.SpritesFromAtlas(texture, 25, 25);
 
-            hitFX.animator.AddAnimation("hit", Constants.GlobalFPS,
-                new Sprite(Scene.Content.LoadTexture(ContentPaths.Sprites + "Empty.png")),
-                sprites[1],
-                sprites[2]
+            hitFX.animator.AddAnimation("hit", Constants.GlobalFPS * 2,
+                sprites.GetRange(TypeIndex(type) * 6, 6).ToArray()
             );
 
             hitFX.animator.Play("hit", SpriteAnimator.LoopMode.Once);
@@ -62,6 +58,12 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             if(t == (ScoopType)'C') return (ScoopType)'V';
             if(t == (ScoopType)'V') return (ScoopType)'S';
             return (ScoopType)'C';
+        }
+
+        public static int TypeIndex(ScoopType t) {
+            if(t == (ScoopType)'C') return 0;
+            if(t == (ScoopType)'V') return 1;
+            return 2;
         }
 
         public enum ScoopType {

@@ -39,7 +39,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
         private void AddFXAnimation() {
             var texture = Scene.Content.LoadTexture(ContentPaths.Popsicle_Shatter);
-            var sprites = Sprite.SpritesFromAtlas(texture, 26, 23);
+            var sprites = Sprite.SpritesFromAtlas(texture, 32, 23);
 
             sprites.Reverse();
             shatterFX.animator.AddAnimation("Reform", Constants.GlobalFPS * 4, sprites.ToArray());
@@ -84,8 +84,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             base.Update();
             var dir = Vector2.Normalize(Scene.Camera.MouseToWorldPoint() - this.Position);
             shatterFX.Rotation = loadedPopsicle.Rotation = Mathf.Atan2(dir.Y, dir.X);
-            loadedPopsicle.Position = this.Position + this.weaponMountOffset;
-            shatterFX.Position = loadedPopsicle.Position + dir * 3;
+            shatterFX.Position = loadedPopsicle.Position = this.Position + this.weaponMountOffset;
         }
     }
 }
