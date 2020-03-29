@@ -9,7 +9,7 @@ namespace IceCreamJam {
         public Game1() {
             Content.RootDirectory = "Content";
 
-            // old reformatting json stuff
+            ////old reformatting json stuff
             //Vector2[][] d;
             //using (var reader = File.OpenText("../../../../Content/truckcollision.json")) {
             //    d = Nez.Persistence.Json.FromJson<Vector2[][]>(reader.ReadToEnd());
@@ -17,7 +17,7 @@ namespace IceCreamJam {
 
             //using (var stream = File.Open("../../../../Content/truckcollision.json", FileMode.Truncate))
             //using (StreamWriter sr = new StreamWriter(stream)) {
-            //    string json = Nez.Persistence.Json.ToJson(d, false);
+            //    string json = Nez.Persistence.Json.ToJson(d, true);
             //    sr.Write(json);
             //}
         }

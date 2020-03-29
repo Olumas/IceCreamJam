@@ -23,18 +23,9 @@ namespace IceCreamJam.Source.Components {
 		int colliderIndex;
 		List<Vector2[]> polygons;
 
-		public ColliderManager(string file, int startingIndex = 0) {
-			this.file = file;
+		public ColliderManager(string shapesFile, int startingIndex = 0) {
+			this.file = shapesFile;
 			this.colliderIndex = startingIndex;
-		}
-
-		public ColliderManager(List<Shape> shape, int startingIndex = 0) {
-			this.colliderIndex = startingIndex;
-		}
-
-		public ColliderManager(List<Shape> shapes, PolygonCollider collider, int startingIndex = 0) {
-			this.colliderIndex = startingIndex;
-			this.collider = collider;
 		}
 
 		public override void OnAddedToEntity() {
