@@ -44,7 +44,10 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             sprites.Reverse();
             shatterFX.animator.AddAnimation("Reform", Constants.GlobalFPS * 4, sprites.ToArray());
 
-            reformTime = reloadTime - (sprites.Count / (Constants.GlobalFPS * 4));
+            // Calculate delay before reforming popsicle
+
+            //reformTime = reloadTime - (sprites.Count / (Constants.GlobalFPS * 4));
+            reformTime = reloadTime - 0.15f; // Jank approximation that looks good enough
         }
 
         public override Projectile InstantiateProjectile(Vector2 pos) {
@@ -71,7 +74,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             yield return Coroutine.WaitForSeconds(reformTime);
             // Reform popsicle
             shatterFX.ToggleVisible(true);
-            shatterFX.animator.Play("Reform", Nez.Sprites.SpriteAnimator.LoopMode.Once);
+            shatterFX.animator.Play("Reform", Nez.Sprites.SpriteAnimator.LoopMode.ClampForever);
             loadedPopsicle.ToggleVisible(false);
         }
 

@@ -47,7 +47,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
                 sprites.GetRange(TypeIndex(type) * 6, 6).ToArray()
             );
 
-            hitFX.animator.Play("hit", SpriteAnimator.LoopMode.Once);
+            hitFX.animator.Play("hit", SpriteAnimator.LoopMode.ClampForever);
             hitFX.animator.OnAnimationCompletedEvent += (s) => hitFX.Destroy();
 
             // Destroy the parent scoop
