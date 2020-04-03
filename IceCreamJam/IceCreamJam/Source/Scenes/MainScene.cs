@@ -18,6 +18,7 @@ namespace IceCreamJam.Source.Scenes {
             AddRenderer(new DefaultRenderer());
 
             AddEntityProcessor(new HomingProjectileSystem(new Matcher().All(typeof(HomingTargetComponent))));
+            AddEntityProcessor(new NPCSystem(new Matcher().All(typeof(NPCComponent))));
         }
 
         public override void OnStart() {

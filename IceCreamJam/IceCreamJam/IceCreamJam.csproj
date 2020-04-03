@@ -49,6 +49,7 @@
     <Compile Include="Source\Components\ColliderManager.cs" />
     <Compile Include="Source\Components\EntitySpringComponent.cs" />
     <Compile Include="Source\Components\HomingTargetComponent.cs" />
+    <Compile Include="Source\Components\NPCComponent.cs" />
     <Compile Include="Source\Components\PlayerAnimationComponent.cs" />
     <Compile Include="Source\Components\PlayerDirection.cs" />
     <Compile Include="Source\Components\PlayerMovementComponent.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Source\Systems\HomingProjectileSystem.cs" />
     <Compile Include="Source\InputManager.cs" />
     <Compile Include="Source\Scenes\MainScene.cs" />
+    <Compile Include="Source\Systems\NPCSystem.cs" />
     <Compile Include="Source\TilemapLoader.cs" />
     <Compile Include="Source\Utility.cs" />
     <Compile Include="Source\WeaponSystem\HomingProjectile.cs" />
@@ -238,7 +240,9 @@
     <Content Include="Content\Sprites\Box.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\truckcollision.json" />
+    <Content Include="Content\truckcollision.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

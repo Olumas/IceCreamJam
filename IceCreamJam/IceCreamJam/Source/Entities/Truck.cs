@@ -2,11 +2,14 @@
 using IceCreamJam.Source.Content;
 using IceCreamJam.Source.WeaponSystem;
 using IceCreamJam.Source.WeaponSystem.Weapons;
+using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
 
 namespace IceCreamJam.Source.Entities {
 	class Truck : Entity {
+
+		public ArcadeRigidbody rb;
 
 		public override void OnAddedToScene() {
 			this.Name = "Truck";
@@ -27,10 +30,18 @@ namespace IceCreamJam.Source.Entities {
 			var colliderManager = AddComponent(new ColliderManager(ContentPaths.Content + "truckcollision.json"));
 			dir.OnDirectionChange += i => colliderManager.SetIndex((int)i);
 
-			AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false, Elasticity = 0 });
+			this.rb = AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false, Elasticity = 0 });
 			AddComponent(new PlayerMovementComponent());
 
 			AddComponent(new WeaponComponent(new ScoopGun(), new PopsicleGun()));
+		}
+
+		public override void DebugRender(Batcher batcher) {
+			base.DebugRender(batcher);
+
+			batcher.DrawCircle(this.Position, 50, Color.Green);
+			batcher.DrawCircle(this.Position, 75, Color.Green);
+			batcher.DrawCircle(this.Position, 150, Color.Green);
 		}
 	}
 }
