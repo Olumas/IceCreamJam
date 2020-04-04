@@ -18,6 +18,7 @@ namespace IceCreamJam.Source {
             EnemyProjectiles = 16
         }
 
+        public const int Layer_Map = 100;
         public const int Layer_WeaponBase = 10;
         public const int Layer_Bullets = 9;
         public const int Layer_WeaponOver = 8;

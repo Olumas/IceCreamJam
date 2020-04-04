@@ -3,6 +3,7 @@ using IceCreamJam.Source.Content;
 using IceCreamJam.Source.Entities;
 using IceCreamJam.Source.Entities.Enemies;
 using IceCreamJam.Source.Systems;
+using IceCreamJam.Source.Tiled;
 using Microsoft.Xna.Framework;
 using Nez;
 
@@ -30,7 +31,7 @@ namespace IceCreamJam.Source.Scenes {
             AddEntity(new Doctor() { Position = new Vector2(Screen.Width / 2, Screen.Height / 2 + 100) });
 
             loader.Load(ContentPaths.Test1);
-            Camera.ZoomIn(1);
+            Camera.ZoomIn(0.5f);
             Camera.AddComponent(new FollowCamera(truck));
         }
     }
