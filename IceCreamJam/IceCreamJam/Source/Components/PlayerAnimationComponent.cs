@@ -9,7 +9,7 @@ namespace IceCreamJam.Source.Components {
 
 		private List<Sprite> sprites;
 		public SpriteAnimator Animator { get; private set; }
-		private PlayerDirection direction;
+		private DirectionComponent direction;
 
 		public float idleFPS = 4;
 
@@ -18,7 +18,7 @@ namespace IceCreamJam.Source.Components {
 			this.sprites = LoadTruckSprites();
 			SetupAnimations();
 
-			this.direction = Entity.GetComponent<PlayerDirection>();
+			this.direction = Entity.GetComponent<DirectionComponent>();
 			direction.OnDirectionChange += this.Direction_OnDirectionChange;
 		}
 

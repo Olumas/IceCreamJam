@@ -51,7 +51,7 @@
     <Compile Include="Source\Components\HomingTargetComponent.cs" />
     <Compile Include="Source\Components\NPCComponent.cs" />
     <Compile Include="Source\Components\PlayerAnimationComponent.cs" />
-    <Compile Include="Source\Components\PlayerDirection.cs" />
+    <Compile Include="Source\Components\DirectionComponent.cs" />
     <Compile Include="Source\Components\PlayerMovementComponent.cs" />
     <Compile Include="Source\Constants.cs" />
     <Compile Include="Source\Content\ContentManagerExt.cs" />

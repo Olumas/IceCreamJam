@@ -14,7 +14,7 @@ namespace IceCreamJam.Source.Entities {
 		public override void OnAddedToScene() {
 			this.Name = "Truck";
 
-			var dir = AddComponent(new PlayerDirection());
+			var dir = AddComponent(new DirectionComponent());
 
 			var animator = AddComponent(new SpriteAnimator());
 			AddComponent(new PlayerAnimationComponent());

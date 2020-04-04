@@ -3,7 +3,7 @@ using Nez;
 using System;
 
 namespace IceCreamJam.Source.Components {
-	class PlayerDirection : Component {
+	class DirectionComponent : Component {
 		private Direction8 direction;
 
 		internal Direction8 Direction {

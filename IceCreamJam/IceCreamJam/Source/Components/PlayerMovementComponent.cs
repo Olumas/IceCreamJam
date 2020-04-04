@@ -5,7 +5,7 @@ namespace IceCreamJam.Source.Components {
 	class PlayerMovementComponent : Component, IUpdatable {
 		Collider collider;
 		ArcadeRigidbody rb;
-		PlayerDirection direction;
+		DirectionComponent direction;
 
 		public float acceleration = 40f;
 		public float deceleration = 30f;
@@ -19,7 +19,7 @@ namespace IceCreamJam.Source.Components {
 		public override void OnAddedToEntity() {
 			collider = Entity.GetComponent<Collider>();
 			rb = Entity.GetComponent<ArcadeRigidbody>();
-			direction = Entity.GetComponent<PlayerDirection>();
+			direction = Entity.GetComponent<DirectionComponent>();
 		}
 
 		public void Update() {
