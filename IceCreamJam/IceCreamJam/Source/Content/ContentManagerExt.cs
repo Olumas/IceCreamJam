@@ -1,14 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Nez;
 using Nez.Persistence;
-using Nez.PhysicsShapes;
 using Nez.Systems;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IceCreamJam.Source.Content {
 	public static class ContentManagerExt {
