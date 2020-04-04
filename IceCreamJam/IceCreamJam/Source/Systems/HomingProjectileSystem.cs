@@ -24,9 +24,6 @@ namespace IceCreamJam.Source.Systems {
                     if(distance > projectileDistance)
                         continue;
 
-                    if(closest == null)
-                        closest = e;
-
                     if(distance < minDist) {
                         minDist = distance;
                         closest = e;
