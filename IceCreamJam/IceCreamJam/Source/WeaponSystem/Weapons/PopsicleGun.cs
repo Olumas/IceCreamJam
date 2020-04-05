@@ -54,7 +54,9 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             var scene = weaponComponent.Entity.Scene;
             var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - (this.Position));
 
-            return new Popsicle(dir) { Position = this.Position + this.weaponMountOffset };
+            var p = Pool<Popsicle>.Obtain();
+            p.Initialize(dir, this.Position + this.weaponMountOffset);
+            return p;
         }
 
         public override void OnUnequipped() {

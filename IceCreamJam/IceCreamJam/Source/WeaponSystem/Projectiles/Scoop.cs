@@ -10,11 +10,19 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
 
         private ScoopType type;
 
-        // Custom constructor, must override InstantiateProjectile on this weapon!
-        public Scoop(Vector2 direction, ScoopType type) : base(direction) {
+        public void Initialize(Vector2 direction, Vector2 position, ScoopType type) {
+            base.Initialize(direction, position);
+
             this.cost = 1;
             this.damage = 1;
             this.speed = 3;
+
+            // If this scoop has been reused, set it to use the correct texture.
+            if(!IsNewProjectile && this.type != type) {
+                this.type = type;
+                SetScoopTextures();
+            }
+
             this.type = type;
         }
 
@@ -23,11 +31,15 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
                 RenderLayer = Constants.Layer_Bullets
             });
 
+            this.renderer = animator;
+            SetScoopTextures();
+        }
+
+        private void SetScoopTextures() {
             var texture = Scene.Content.LoadTexture(ContentPaths.Scoop + $"Scoop_{(char)type}.png");
             var sprites = Sprite.SpritesFromAtlas(texture, 20, 9, 0);
 
-            animator.AddAnimation("Fly", Constants.GlobalFPS, sprites.ToArray()).Play("Fly");
-            this.renderer = animator;
+            (this.renderer as SpriteAnimator).AddAnimation("Fly", Constants.GlobalFPS, sprites.ToArray()).Play("Fly");
         }
 
         public override Vector2 CalculateVector() {
@@ -50,8 +62,8 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             hitFX.animator.Play("hit", SpriteAnimator.LoopMode.ClampForever);
             hitFX.animator.OnAnimationCompletedEvent += (s) => hitFX.Destroy();
 
-            // Destroy the parent scoop
-            base.OnHit(result);
+            // Free this projectile
+            Pool<Scoop>.Free(this);
         }
 
         public static ScoopType GetNext(ScoopType t) {

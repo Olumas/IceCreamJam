@@ -10,8 +10,6 @@ namespace IceCreamJam.Source.WeaponSystem {
         public Vector2 targetHeading;
         public static HomingProjectileSystem homingSystem;
 
-        public HomingProjectile(Vector2 direction) : base(direction) { }
-
         public override void OnAddedToScene() {
             base.OnAddedToScene();
 
@@ -19,11 +17,6 @@ namespace IceCreamJam.Source.WeaponSystem {
                 homingSystem = Scene.GetEntityProcessor<HomingProjectileSystem>();
 
             homingSystem.projectiles.Add(this);
-        }
-
-        public override void OnHit(CollisionResult result) {
-            base.OnHit(result);
-            homingSystem.projectiles.Remove(this);
         }
 
         public override Vector2 CalculateVector() {
@@ -48,5 +41,7 @@ namespace IceCreamJam.Source.WeaponSystem {
             // Rotate projectile to face target
             this.Rotation = newAngle;
         }
+
+        public override void OnHit(CollisionResult result) { }
     }
 }

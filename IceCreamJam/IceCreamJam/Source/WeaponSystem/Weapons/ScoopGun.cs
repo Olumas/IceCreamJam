@@ -67,11 +67,11 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
 
         public override Projectile InstantiateProjectile(Vector2 pos) {
             var scene = weaponComponent.Entity.Scene;
-            var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - (coneSpring.TargetPosition));
+            var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - coneSpring.TargetPosition);
 
             type = Scoop.GetNext(type);
-            var s = new Scoop(dir, type);
-            s.Position = pos + this.weaponMountOffset + dir * 4; // Line up scoop with cone
+            var s = Pool<Scoop>.Obtain();
+            s.Initialize(dir, pos + this.weaponMountOffset + dir * 4, type);
 
             // Shock the cone
             coneSpring.Shock(-dir * 3);

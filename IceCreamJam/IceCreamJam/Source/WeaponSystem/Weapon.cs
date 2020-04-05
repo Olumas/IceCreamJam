@@ -59,7 +59,10 @@ namespace IceCreamJam.Source.WeaponSystem {
 
                 // Instantiate a projectile using the weapon's projectile type
                 var p = InstantiateProjectile(this.Position);
-                weaponComponent.Entity.Scene.AddEntity(p);
+
+                // Don't add it to the scene if it's already been added
+                if(p.IsNewProjectile)
+                    weaponComponent.Entity.Scene.AddEntity(p); 
 
                 OnShoot();
             }
@@ -67,14 +70,14 @@ namespace IceCreamJam.Source.WeaponSystem {
 
         public virtual void OnShoot() { }
 
-        public virtual Projectile InstantiateProjectile(Vector2 pos) {
-            var scene = weaponComponent.Entity.Scene;
-            var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - (weaponComponent.Entity.Position + weaponMountOffset));
-
-            var p = (Projectile)Activator.CreateInstance(projectileType, dir);
-            p.Position = pos;
-            return p;
-        }
+        public abstract Projectile InstantiateProjectile(Vector2 pos);
+        //    var scene = weaponComponent.Entity.Scene;
+        //    var dir = Vector2.Normalize(scene.Camera.MouseToWorldPoint() - (weaponComponent.Entity.Position + weaponMountOffset));
+        //
+        //    var p = (Projectile)Activator.CreateInstance(projectileType);
+        //    p.Initialize(dir, pos);
+        //    return p;
+        //}
 
         IEnumerator ReloadTimer() {
             yield return Coroutine.WaitForSeconds(reloadTime);

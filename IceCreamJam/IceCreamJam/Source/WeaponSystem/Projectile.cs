@@ -3,7 +3,7 @@ using Nez;
 using Nez.Sprites;
 
 namespace IceCreamJam.Source.WeaponSystem {
-    abstract class Projectile : Entity {
+    abstract class Projectile : Entity, IPoolable {
         public float cost;
         public float damage;
         public string texturePath;
@@ -14,11 +14,17 @@ namespace IceCreamJam.Source.WeaponSystem {
         protected Mover moveComponent;
         public RenderableComponent renderer;
 
-        public Projectile(Vector2 direction) {
-            this.direction = direction;
+        public bool IsNewProjectile = true;
 
-            var target = (Position + direction);
-            Rotation = Mathf.Atan2(target.Y, target.X);
+        public Projectile() {}
+
+        public virtual void Initialize(Vector2 direction, Vector2 position) {
+            this.direction = direction;
+            this.Position = position;
+            this.Rotation = Mathf.Atan2(direction.Y, direction.X);
+
+            // Re-enable this projectile to be used
+            this.SetEnabled(true);
         }
 
         public override void OnAddedToScene() {
@@ -31,6 +37,7 @@ namespace IceCreamJam.Source.WeaponSystem {
             b.CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC);
 
             this.moveComponent = AddComponent(new Mover());
+            this.IsNewProjectile = false;
         }
 
         public virtual void SetupTextures() {
@@ -62,8 +69,17 @@ namespace IceCreamJam.Source.WeaponSystem {
         /// <summary>
         /// Override this to instantiate sub-projectiles
         /// </summary>
-        public virtual void OnHit(CollisionResult result) {
-            this.Destroy();
+        public abstract void OnHit(CollisionResult result);
+            // Pool<T>.Free(this); 
+            // ^^ Every projectile must have this!
+
+        public void Reset() {
+            // All important fields should be reset in Initialize,
+            // when the projectile is called from the pool and given a new 
+            // position and direction.
+
+            // Disable the entity to stop rendering and colliding
+            this.SetEnabled(false);
         }
     }
 }
