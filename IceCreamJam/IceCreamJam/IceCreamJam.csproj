@@ -74,14 +74,10 @@
     <Compile Include="Source\WeaponSystem\Projectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\Popsicle.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\Scoop.cs" />
-    <Compile Include="Source\WeaponSystem\Projectiles\TestProjectile2.cs" />
-    <Compile Include="Source\WeaponSystem\Projectiles\TestProjectile.cs" />
     <Compile Include="Source\WeaponSystem\Weapon.cs" />
     <Compile Include="Source\WeaponSystem\WeaponComponent.cs" />
     <Compile Include="Source\WeaponSystem\Weapons\PopsicleGun.cs" />
     <Compile Include="Source\WeaponSystem\Weapons\ScoopGun.cs" />
-    <Compile Include="Source\WeaponSystem\Weapons\TestWeapon2.cs" />
-    <Compile Include="Source\WeaponSystem\Weapons\TestWeapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -230,12 +226,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Weapons\Scoop\Scoop_V.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\TestProjectile2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Weapons\TestProjectile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Box.png">
