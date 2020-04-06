@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using IceCreamJam.Source.Components;
+using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
 
@@ -8,23 +9,34 @@ namespace IceCreamJam.Source.WeaponSystem {
         public float damage;
         public string texturePath;
         public float speed;
+        public float lifetime;
 
         public Vector2 direction;
 
         protected Mover moveComponent;
         public RenderableComponent renderer;
+        public ProjectileLifeComponent lifeComponent;
 
         public bool IsNewProjectile = true;
 
         public Projectile() {}
+
+        public virtual void Initialize(Vector2 direction, Vector2 position, float lifetime) {
+            Initialize(direction, position);
+            this.lifetime = lifetime;
+        }
 
         public virtual void Initialize(Vector2 direction, Vector2 position) {
             this.direction = direction;
             this.Position = position;
             this.Rotation = Mathf.Atan2(direction.Y, direction.X);
 
-            // Re-enable this projectile to be used
-            this.SetEnabled(true);
+            // Set this projectile to be re-used
+            if(!IsNewProjectile) {
+                this.SetEnabled(true);
+                lifeComponent.Start();
+            }
+
         }
 
         public override void OnAddedToScene() {
@@ -35,6 +47,11 @@ namespace IceCreamJam.Source.WeaponSystem {
             b.LocalOffset = new Vector2(5, 0);
             b.PhysicsLayer = (int)Constants.PhysicsLayers.PlayerProjectiles;
             b.CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC);
+
+            if(lifetime != 0f) {
+                this.lifeComponent = AddComponent(new ProjectileLifeComponent(lifetime));
+                lifeComponent.Start();
+            }
 
             this.moveComponent = AddComponent(new Mover());
             this.IsNewProjectile = false;
@@ -69,7 +86,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         /// <summary>
         /// Override this to instantiate sub-projectiles
         /// </summary>
-        public abstract void OnHit(CollisionResult result);
+        public abstract void OnHit(CollisionResult? result);
             // Pool<T>.Free(this); 
             // ^^ Every projectile must have this!
 

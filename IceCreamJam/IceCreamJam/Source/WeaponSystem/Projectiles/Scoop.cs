@@ -16,6 +16,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             this.cost = 1;
             this.damage = 1;
             this.speed = 3;
+            this.lifetime = 1;
 
             // If this scoop has been reused, set it to use the correct texture.
             if(!IsNewProjectile && this.type != type) {
@@ -46,7 +47,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             return direction * speed;
         }
 
-        public override void OnHit(CollisionResult result) {
+        public override void OnHit(CollisionResult? result) {
             var hitFX = Scene.AddEntity(new AnimatedEntity());
 
             hitFX.Position = this.Position;
