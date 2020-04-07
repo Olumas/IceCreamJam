@@ -9,6 +9,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
     class Scoop : Projectile {
 
         private ScoopType type;
+        public Vector2 truckVelocity;
 
         public void Initialize(Vector2 direction, Vector2 position, ScoopType type) {
             base.Initialize(direction, position);
@@ -44,7 +45,10 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         }
 
         public override Vector2 CalculateVector() {
-            return direction * speed;
+            var dot = Vector2.Dot(Vector2.Normalize(truckVelocity), direction);
+            if(dot > 0)
+                return (direction * speed) + dot * truckVelocity;
+            return (direction * speed);
         }
 
         public override void OnHit(CollisionResult? result) {

@@ -72,6 +72,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             type = Scoop.GetNext(type);
             var s = Pool<Scoop>.Obtain();
             s.Initialize(dir, pos + this.weaponMountOffset + dir * 4, type);
+            s.truckVelocity = (weaponComponent.Entity as Truck).rb.Velocity * Time.DeltaTime;
 
             // Shock the cone
             coneSpring.Shock(-dir * 3);
