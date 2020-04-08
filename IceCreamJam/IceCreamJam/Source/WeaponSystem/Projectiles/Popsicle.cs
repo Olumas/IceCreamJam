@@ -8,11 +8,14 @@ using Nez.Textures;
 namespace IceCreamJam.Source.WeaponSystem.Projectiles {
     class Popsicle : HomingProjectile {
 
-        public Popsicle(Vector2 direction) : base(direction) {
+        public override void Initialize(Vector2 direction, Vector2 position) {
+            base.Initialize(direction, position);
+
             this.speed = 2;
+            this.lifetime = 5;
             this.targetHeading = direction;
         }
-        
+
         public override void SetupTextures() {
             var animator = AddComponent(new SpriteAnimator() {
                 RenderLayer = Constants.Layer_Bullets
@@ -25,7 +28,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             this.renderer = animator;
         }
 
-        public override void OnHit(CollisionResult result) {
+        public override void OnHit(CollisionResult? result) {
             var hitFX = Scene.AddEntity(new AnimatedEntity());
             var dir = CalculateVector();
             hitFX.Rotation = Mathf.Atan2(dir.Y, dir.X);
@@ -42,8 +45,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             
             hitFX.animator.OnAnimationCompletedEvent += (s) => hitFX.Destroy();
 
-            // Destroy the parent popsicle
-            base.OnHit(result);
+            Pool<Popsicle>.Free(this);
         }
 
         public override void DebugRender(Batcher batcher) {

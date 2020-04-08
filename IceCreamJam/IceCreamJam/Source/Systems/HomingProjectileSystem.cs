@@ -17,6 +17,9 @@ namespace IceCreamJam.Source.Systems {
             base.Process(entities);
 
             foreach(HomingProjectile p in projectiles) {
+                if(!p.Enabled)
+                    continue;   // Skip disabled projectiles that are waiting in the Pool
+
                 float minDist = float.MaxValue;
                 Entity closest = null;
                 foreach(Entity e in entities){
