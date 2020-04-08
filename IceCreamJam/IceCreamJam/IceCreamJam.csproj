@@ -63,6 +63,7 @@
     <Compile Include="Source\Entities\NPC.cs" />
     <Compile Include="Source\Entities\SpriteEntity.cs" />
     <Compile Include="Source\Entities\Truck.cs" />
+    <Compile Include="Source\Components\PlayerInputComponent.cs" />
     <Compile Include="Source\Systems\HomingProjectileSystem.cs" />
     <Compile Include="Source\InputManager.cs" />
     <Compile Include="Source\Scenes\MainScene.cs" />

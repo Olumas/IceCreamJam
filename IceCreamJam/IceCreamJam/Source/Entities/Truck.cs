@@ -15,6 +15,7 @@ namespace IceCreamJam.Source.Entities {
 			this.Name = "Truck";
 
 			var dir = AddComponent(new DirectionComponent());
+			AddComponent(new PlayerInputComponent());
 
 			var animator = AddComponent(new SpriteAnimator());
 			AddComponent(new PlayerAnimationComponent());
