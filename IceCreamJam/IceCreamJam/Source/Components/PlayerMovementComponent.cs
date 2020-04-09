@@ -20,19 +20,16 @@ namespace IceCreamJam.Source.Components {
 			collider = Entity.GetComponent<Collider>();
 			rb = Entity.GetComponent<ArcadeRigidbody>();
 			direction = Entity.GetComponent<DirectionComponent>();
+
+			direction.OnDirectionChange += this.Direction_OnDirectionChange;
+		}
+
+		private void Direction_OnDirectionChange(Direction8 obj) {
+			currentDirectionVector = obj.ToVector2();
 		}
 
 		public void Update() {
-			bool? isNorth = InputManager.yAxis.Value == 0 ? null : (bool?)(InputManager.yAxis.Value < 0);
-			bool? isWest = InputManager.xAxis.Value == 0 ? null : (bool?)(InputManager.xAxis.Value < 0);
-			var newDir = NewDirection(isNorth, isWest);
-			if (newDir.HasValue && direction.Direction != newDir.Value) {
-				direction.Direction = newDir.Value;
-				currentDirectionVector = new Vector2(InputManager.xAxis.Value, InputManager.yAxis.Value);
-				currentDirectionVector.Normalize();
-			}
-
-			if (newDir.HasValue) {
+			if (InputManager.xAxis != 0 || InputManager.yAxis != 0) {
 				targetSpeed += acceleration * Time.DeltaTime;
 				if (targetSpeed >= maxSpeed) targetSpeed = maxSpeed;
 			} else {
@@ -40,38 +37,14 @@ namespace IceCreamJam.Source.Components {
 				if (targetSpeed <= 0) targetSpeed = 0;
 			}
 
-			Vector2 targetVelocity = currentDirectionVector * targetSpeed;
+			Vector2 targetVelocity = currentDirectionVector.Normalized() * targetSpeed;
 			rb.Velocity = targetVelocity;
 
-			Vector2 targetMovement = currentDirectionVector * targetSpeed * Time.DeltaTime;
+			Vector2 targetMovement = targetVelocity * Time.DeltaTime;
 			if (collider.CollidesWithAny(ref targetMovement, out CollisionResult result)) {
 				if (result.Collider.PhysicsLayer.IsFlagSet((int)Constants.PhysicsLayers.Buildings)) {
 					targetSpeed = 0;
 				}
-			}
-		}
-
-		private Direction8? NewDirection(bool? isNorth, bool? isWest) {
-			if (!isNorth.HasValue && !isWest.HasValue) return null;
-			if (isNorth.HasValue) {
-				if (isNorth.Value) {
-					if (isWest.HasValue) {
-						if (isWest.Value) return Direction8.NorthWest;
-						else return Direction8.NorthEast;
-					} else {
-						return Direction8.North;
-					}
-				} else {
-					if (isWest.HasValue) {
-						if (isWest.Value) return Direction8.SouthWest;
-						else return Direction8.SouthEast;
-					} else {
-						return Direction8.South;
-					}
-				}
-			} else {
-				if (isWest.Value) return Direction8.West;
-				else return Direction8.East;
 			}
 		}
 
