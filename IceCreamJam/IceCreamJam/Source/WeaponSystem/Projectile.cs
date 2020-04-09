@@ -15,6 +15,7 @@ namespace IceCreamJam.Source.WeaponSystem {
 
         protected Mover moveComponent;
         public RenderableComponent renderer;
+        public Collider collider;
         public ProjectileLifeComponent lifeComponent;
 
         public bool IsNewProjectile = true;
@@ -34,19 +35,21 @@ namespace IceCreamJam.Source.WeaponSystem {
             // Set this projectile to be re-used
             if(!IsNewProjectile) {
                 this.SetEnabled(true);
-                lifeComponent.Start();
+                if(this.lifetime != 0)
+                    lifeComponent.Start();
             }
-
         }
 
         public override void OnAddedToScene() {
             base.OnAddedToScene();
 
             SetupTextures();
-            var b = AddComponent(new CircleCollider(4));
-            b.LocalOffset = new Vector2(5, 0);
-            b.PhysicsLayer = (int)Constants.PhysicsLayers.PlayerProjectiles;
-            b.CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC);
+            this.collider = AddComponent(new CircleCollider(4) {
+                LocalOffset = new Vector2(5, 0),
+                PhysicsLayer = (int)Constants.PhysicsLayers.PlayerProjectiles,
+                CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC),
+                IsTrigger = true
+            });
 
             if(lifetime != 0f) {
                 this.lifeComponent = AddComponent(new ProjectileLifeComponent(lifetime));
@@ -81,7 +84,11 @@ namespace IceCreamJam.Source.WeaponSystem {
 
             if(collisionResult.Collider != null)
                 OnHit(collisionResult);
+            else
+                OnNoHit();
         }
+
+        public virtual void OnNoHit() { }
 
         /// <summary>
         /// Override this to instantiate sub-projectiles

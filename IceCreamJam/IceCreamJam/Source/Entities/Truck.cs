@@ -33,7 +33,7 @@ namespace IceCreamJam.Source.Entities {
 			this.rb = AddComponent(new ArcadeRigidbody() { ShouldUseGravity = false, Elasticity = 0 });
 			AddComponent(new PlayerMovementComponent());
 
-			AddComponent(new WeaponComponent(new ScoopGun(), new PopsicleGun()));
+			AddComponent(new WeaponComponent(new ScoopGun(), new PopsicleGun(), new BananaBigGun()));
 		}
 
 		public override void DebugRender(Batcher batcher) {
