@@ -22,6 +22,7 @@ namespace IceCreamJam.Source {
         public const int Layer_WeaponBase = 10;
         public const int Layer_Bullets = 9;
         public const int Layer_WeaponOver = 8;
+        public const int Layer_UI = -10;
 
 
 

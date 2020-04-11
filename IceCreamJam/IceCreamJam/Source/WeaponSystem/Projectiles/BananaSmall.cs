@@ -10,6 +10,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         private int dmg;
         private Collider otherCollider;
         private float startAngle;
+        private float rotateAngle;
 
         public override void Initialize(Vector2 direction, Vector2 position) {
             base.Initialize(direction, position);
@@ -24,6 +25,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
 
             this.otherCollider = null;
             this.startAngle = this.Rotation + Mathf.Deg2Rad * 90;
+            this.Rotation = 0;
         }
 
         public override void SetupTextures() {
@@ -42,7 +44,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         }
 
         public override Vector2 CalculateVector() {
-            return new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * speed;
+            return new Vector2(Mathf.Cos(rotateAngle), Mathf.Sin(rotateAngle)) * speed;
         }
 
         public override void Update() {
@@ -50,7 +52,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             CheckCollision();
 
             // Rotate
-            this.Rotation = startAngle + lifeComponent.progress * Mathf.Deg2Rad * 360;
+            rotateAngle = startAngle + lifeComponent.progress * Mathf.Deg2Rad * 360;
         }
 
         private void CheckCollision() {

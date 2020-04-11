@@ -39,6 +39,15 @@
         public const string Banana_Small = Banana + "Banana_Small.png";
         #endregion
 
+        #region UI
+        public const string UI = Sprites + "UI/";
+
+        public const string Crosshair = UI + "Crosshair/";
+        public const string Crosshair_Diagonal = Crosshair + "Crosshair_Diagonal.png";
+        public const string Crosshair_Vertical = Crosshair + "Crosshair_Vertical.png";
+        public const string Crosshair_Transition = Crosshair + "Crosshair_Transition.png"; 
+        #endregion
+
         #region Maps
         public const string TiledMaps = Content + "TiledMaps/";
         public const string Test1 = TiledMaps + "Test1.tmx";

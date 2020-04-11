@@ -25,6 +25,7 @@ namespace IceCreamJam {
         protected override void Initialize() {
             base.Initialize();
             Scene = new MainScene();
+            IsMouseVisible = false;
         }
     }
 }

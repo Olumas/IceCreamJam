@@ -4,6 +4,7 @@ using IceCreamJam.Source.Entities;
 using IceCreamJam.Source.Entities.Enemies;
 using IceCreamJam.Source.Systems;
 using IceCreamJam.Source.Tiled;
+using IceCreamJam.Source.UI;
 using Microsoft.Xna.Framework;
 using Nez;
 
@@ -29,6 +30,7 @@ namespace IceCreamJam.Source.Scenes {
             }
 
             AddEntity(new Doctor() { Position = new Vector2(Screen.Width / 2, Screen.Height / 2 + 100) });
+            AddEntity(new Crosshair());
 
             loader.Load(ContentPaths.Test1);
             Camera.ZoomIn(0.5f);

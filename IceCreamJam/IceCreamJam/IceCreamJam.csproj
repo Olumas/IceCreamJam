@@ -71,6 +71,7 @@
     <Compile Include="Source\Systems\NPCSystem.cs" />
     <Compile Include="Source\Tiled\TiledMap.cs" />
     <Compile Include="Source\Tiled\TilemapLoader.cs" />
+    <Compile Include="Source\UI\Crosshair.cs" />
     <Compile Include="Source\Utility.cs" />
     <Compile Include="Source\WeaponSystem\HomingProjectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectile.cs" />
@@ -190,6 +191,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Truck\truck.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\UI\Crosshair\Crosshair_Diagonal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\UI\Crosshair\Crosshair_Vertical.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\UI\Crosshair\Crosshair_Transition.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Weapons\Banana\Banana_Base_Big.png">
