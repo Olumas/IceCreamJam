@@ -48,7 +48,6 @@ namespace IceCreamJam.Source.WeaponSystem {
                 LocalOffset = new Vector2(5, 0),
                 PhysicsLayer = (int)Constants.PhysicsLayers.PlayerProjectiles,
                 CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC),
-                IsTrigger = true
             });
 
             if(lifetime != 0f) {
@@ -71,7 +70,9 @@ namespace IceCreamJam.Source.WeaponSystem {
         /// Calculate path (straight, boomerang, homing, aoe, etc)
         /// </summary>
         /// <returns>The vector to move the projectile by</returns>
-        public abstract Vector2 CalculateVector();
+        public virtual Vector2 CalculateVector() {
+            return direction * speed;
+        }
 
         public override void Update() {
             base.Update();
@@ -84,11 +85,7 @@ namespace IceCreamJam.Source.WeaponSystem {
 
             if(collisionResult.Collider != null)
                 OnHit(collisionResult);
-            else
-                OnNoHit();
         }
-
-        public virtual void OnNoHit() { }
 
         /// <summary>
         /// Override this to instantiate sub-projectiles

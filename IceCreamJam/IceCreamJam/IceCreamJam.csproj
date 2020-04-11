@@ -69,18 +69,19 @@
     <Compile Include="Source\InputManager.cs" />
     <Compile Include="Source\Scenes\MainScene.cs" />
     <Compile Include="Source\Systems\NPCSystem.cs" />
-    <Compile Include="Source\Systems\ProjectileLifeSystem.cs" />
     <Compile Include="Source\Tiled\TiledMap.cs" />
     <Compile Include="Source\Tiled\TilemapLoader.cs" />
     <Compile Include="Source\Utility.cs" />
     <Compile Include="Source\WeaponSystem\HomingProjectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\BananaBig.cs" />
+    <Compile Include="Source\WeaponSystem\Projectiles\BananaSmall.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\Popsicle.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\Scoop.cs" />
     <Compile Include="Source\WeaponSystem\Weapon.cs" />
     <Compile Include="Source\WeaponSystem\WeaponComponent.cs" />
     <Compile Include="Source\WeaponSystem\Weapons\BananaBigGun.cs" />
+    <Compile Include="Source\WeaponSystem\Weapons\BananaSmallGun.cs" />
     <Compile Include="Source\WeaponSystem\Weapons\PopsicleGun.cs" />
     <Compile Include="Source\WeaponSystem\Weapons\ScoopGun.cs" />
   </ItemGroup>
@@ -189,6 +190,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Truck\truck.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Banana\Banana_Base_Big.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Weapons\Banana\Banana_Base_Small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Weapons\Banana\Banana_Big.png">

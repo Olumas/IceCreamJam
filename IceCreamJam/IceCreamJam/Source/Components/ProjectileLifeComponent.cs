@@ -16,16 +16,17 @@ namespace IceCreamJam.Source.Components {
         public void Start() {
             startTime = Time.TotalTime;
             isFinished = false;
+            progress = 0;
         }
 
         public void Update() {
             if(isFinished)
                 return;
 
-            var remainingTime = (startTime + lifetime);
+            var remainingTime = (startTime + lifetime) - Time.TotalTime;
             progress = remainingTime / lifetime;
 
-            if(remainingTime - Time.TotalTime < 0.01f) {
+            if(remainingTime < 0.01f) {
                 (Entity as Projectile).OnHit(null);
                 isFinished = true;
                 progress = 1;

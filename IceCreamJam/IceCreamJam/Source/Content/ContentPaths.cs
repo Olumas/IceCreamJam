@@ -33,6 +33,8 @@
         public const string Popsicle_Shatter = Popsicle + "Popsicle_Shatter.png";
 
         public const string Banana = Weapons + "Banana/";
+        public const string Banana_Base_Big = Banana + "Banana_Base_Big.png";
+        public const string Banana_Base_Small = Banana + "Banana_Base_Small.png";
         public const string Banana_Big = Banana + "Banana_Big.png";
         public const string Banana_Small = Banana + "Banana_Small.png";
         #endregion
