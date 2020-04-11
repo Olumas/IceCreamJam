@@ -18,7 +18,6 @@ namespace IceCreamJam.Source.Scenes {
             SetDesignResolution(1280, 720, SceneResolutionPolicy.ShowAll);
             AddRenderer(new DefaultRenderer());
 
-            AddEntityProcessor(new ProjectileLifeSystem(new Matcher().All(typeof(ProjectileLifeComponent))));
             AddEntityProcessor(new HomingProjectileSystem(new Matcher().All(typeof(HomingTargetComponent))));
             AddEntityProcessor(new NPCSystem(new Matcher().All(typeof(NPCComponent))));
         }
@@ -34,12 +33,6 @@ namespace IceCreamJam.Source.Scenes {
             loader.Load(ContentPaths.Test1);
             Camera.ZoomIn(0.5f);
             Camera.AddComponent(new FollowCamera(truck));
-        }
-
-        public override void Update() {
-            base.Update();
-
-            //Debug.Log(Time.TotalTime);
         }
     }
 }
