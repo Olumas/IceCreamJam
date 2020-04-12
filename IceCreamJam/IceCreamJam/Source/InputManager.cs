@@ -3,7 +3,6 @@ using Nez;
 
 namespace IceCreamJam.Source {
 	static class InputManager {
-		public static readonly VirtualButton up, down, left, right;
 		/// <summary>
 		/// negative values are up, positive values are down
 		/// </summary>
@@ -18,11 +17,6 @@ namespace IceCreamJam.Source {
 		public static readonly VirtualIntegerAxis switchWeapon;
 
 		static InputManager() {
-			up = new VirtualButton().AddKeyboardKey(Keys.W).AddGamePadButton(0, Buttons.LeftThumbstickUp);
-			down = new VirtualButton().AddKeyboardKey(Keys.D).AddGamePadButton(0, Buttons.LeftThumbstickDown);
-			left = new VirtualButton().AddKeyboardKey(Keys.A).AddGamePadButton(0, Buttons.LeftThumbstickLeft);
-			right = new VirtualButton().AddKeyboardKey(Keys.D).AddGamePadButton(0, Buttons.LeftThumbstickRight);
-
 			xAxis = new VirtualAxis();
 			xAxis.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.A, Keys.D));
 			xAxis.Nodes.Add(new VirtualAxis.GamePadLeftStickX());

@@ -4,18 +4,22 @@ using System;
 
 namespace IceCreamJam.Source.Components {
 	class DirectionComponent : Component {
+		[Inspectable]
 		private Direction8 direction;
 
+		[Inspectable]
+		internal Direction8 PreviousDirection { get; private set; }
 		internal Direction8 Direction {
 			get => this.direction; set {
 				if (this.direction != value) {
 					OnDirectionChange?.Invoke(value);
 				}
+				this.PreviousDirection = direction;
 				this.direction = value;
 			}
 		}
 
-		public event Action<Direction8> OnDirectionChange;	
+		public event Action<Direction8> OnDirectionChange;
 	}
 
 	public enum Direction8 {
@@ -44,6 +48,16 @@ namespace IceCreamJam.Source.Components {
 				default:
 					throw new ArgumentOutOfRangeException(nameof(d));
 			}
+		}
+
+		public static Direction8 RotateCW(this Direction8 d, int increments) {
+			return (Direction8)Utility.Mod((int)d + increments, 8);
+		}
+
+		public static int Difference(this Direction8 d, Direction8 o) {
+			var num = Utility.Mod(o - d, 8);
+			if (num > 4) num -= 8;
+			return num;
 		}
 	}
 }

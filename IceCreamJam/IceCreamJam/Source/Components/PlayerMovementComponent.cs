@@ -6,44 +6,72 @@ namespace IceCreamJam.Source.Components {
 		Collider collider;
 		ArcadeRigidbody rb;
 		DirectionComponent direction;
+		PlayerInputComponent playerInput;
 
 		public float acceleration = 40f;
-		public float deceleration = 30f;
-
-		public float moveSpeed = 80f;
+		public float coastDeceleration = 30f;
+		public float brakeDeceleration = 50f;
 		public float maxSpeed = 200f;
 
-		public float targetSpeed = 0f;
-		public Vector2 currentDirectionVector = new Vector2(1, 0);
+		public float turnSpeed;
+
+		private Direction8 targetHeading;
+		private Direction8 currentHeading;
+		private Vector2 currentDirectionVector = new Vector2(1, 0);
+
+		[Inspectable]
+		private float speed = 0f;
+
+		public Direction8 CurrentHeading {
+			get => this.currentHeading; set {
+				currentHeading = value;
+				currentDirectionVector = value.ToVector2().Normalized();
+				direction.Direction = value;
+			}
+		}
 
 		public override void OnAddedToEntity() {
 			collider = Entity.GetComponent<Collider>();
 			rb = Entity.GetComponent<ArcadeRigidbody>();
 			direction = Entity.GetComponent<DirectionComponent>();
+			playerInput = Entity.GetComponent<PlayerInputComponent>();
 
-			direction.OnDirectionChange += this.Direction_OnDirectionChange;
+			playerInput.OnInputStart += this.GetInput;
 		}
 
-		private void Direction_OnDirectionChange(Direction8 obj) {
-			currentDirectionVector = obj.ToVector2();
+		private void GetInput(Direction8 obj) {
+			targetHeading = obj;
+
+			if (speed == 0) {
+				CurrentHeading = obj;
+			}
 		}
 
 		public void Update() {
-			if (InputManager.xAxis != 0 || InputManager.yAxis != 0) {
-				targetSpeed += acceleration * Time.DeltaTime;
-				if (targetSpeed >= maxSpeed) targetSpeed = maxSpeed;
+			if (playerInput.InputHeld) {
+				if (CurrentHeading == targetHeading) {
+					// facing same direction as input
+					speed = Mathf.Approach(speed, maxSpeed, acceleration * Time.DeltaTime);
+				} else if (CurrentHeading.Difference(targetHeading) == 4) {
+					// facing opposite direction as input
+					speed = Mathf.Approach(speed, 0, brakeDeceleration * Time.DeltaTime);
+				} else {
+					// facing different direction from input
+					int difference = CurrentHeading.Difference(targetHeading);
+					CurrentHeading = CurrentHeading.RotateCW(difference);
+				}
 			} else {
-				if (targetSpeed > 0) targetSpeed -= deceleration * Time.DeltaTime;
-				if (targetSpeed <= 0) targetSpeed = 0;
+				speed = Mathf.Approach(speed, 0, coastDeceleration * Time.DeltaTime);
 			}
 
-			Vector2 targetVelocity = currentDirectionVector.Normalized() * targetSpeed;
-			rb.Velocity = targetVelocity;
+			Vector2 currentVelocity = currentDirectionVector * speed;
+			rb.Velocity = currentVelocity;
 
-			Vector2 targetMovement = targetVelocity * Time.DeltaTime;
-			if (collider.CollidesWithAny(ref targetMovement, out CollisionResult result)) {
+			// TODO: remove hack to instantly stop movement when rammed into a building
+			Vector2 movement = currentVelocity * Time.DeltaTime;
+			if (collider.CollidesWithAny(ref movement, out CollisionResult result)) {
 				if (result.Collider.PhysicsLayer.IsFlagSet((int)Constants.PhysicsLayers.Buildings)) {
-					targetSpeed = 0;
+					speed = 0;
 				}
 			}
 		}

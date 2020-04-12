@@ -7,36 +7,43 @@ using Nez;
 
 namespace IceCreamJam.Source.Components {
 	class PlayerInputComponent : Component, IUpdatable {
-		DirectionComponent direction;
+		private bool previnputHeld;
+		private bool currInputHeld;
+		private Direction8? prevDirection;
 
-		public override void OnAddedToEntity() {
-			direction = Entity.GetComponent<DirectionComponent>();
-		}
+		public bool InputHeld => currInputHeld;
+		public bool InputStart => !previnputHeld && currInputHeld;
+		public bool InputEnd => previnputHeld && !currInputHeld;
 
+		public Action<Direction8> OnInputStart;
+		
 		public void Update() {
+			// poll the static input manager for current input information
 			bool? isNorth = InputManager.yAxis.Value == 0 ? null : (bool?)(InputManager.yAxis.Value < 0);
 			bool? isWest = InputManager.xAxis.Value == 0 ? null : (bool?)(InputManager.xAxis.Value < 0);
-			var newDir = NewDirection(isNorth, isWest);
-			if (newDir.HasValue && direction.Direction != newDir.Value) {
-				direction.Direction = newDir.Value;
+
+			previnputHeld = currInputHeld;
+			currInputHeld = isNorth.HasValue || isWest.HasValue;
+
+			// convert the directional input information into a Direction8
+			var newDir = DirectionFromInput(isNorth, isWest);
+			if (newDir.HasValue && (InputStart || prevDirection != newDir)) {
+				OnInputStart?.Invoke(newDir.Value);
 			}
+			prevDirection = newDir;
 		}
 
-		private Direction8? NewDirection(bool? isNorth, bool? isWest) {
+		private static Direction8? DirectionFromInput(bool? isNorth, bool? isWest) {
 			if (!isNorth.HasValue && !isWest.HasValue) return null;
 			if (isNorth.HasValue) {
 				if (isNorth.Value) {
-					if (isWest.HasValue) {
+					if (isWest.HasValue)
 						return isWest.Value ? (Direction8?)Direction8.NorthWest : (Direction8?)Direction8.NorthEast;
-					} else {
-						return Direction8.North;
-					}
+					else return Direction8.North;
 				} else {
-					if (isWest.HasValue) {
+					if (isWest.HasValue)
 						return isWest.Value ? (Direction8?)Direction8.SouthWest : (Direction8?)Direction8.SouthEast;
-					} else {
-						return Direction8.South;
-					}
+					else return Direction8.South;
 				}
 			} else {
 				return isWest.Value ? (Direction8?)Direction8.West : (Direction8?)Direction8.East;
