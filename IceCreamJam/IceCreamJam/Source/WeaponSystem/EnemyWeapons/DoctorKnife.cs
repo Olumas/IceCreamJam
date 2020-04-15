@@ -11,7 +11,7 @@ namespace IceCreamJam.Source.WeaponSystem.EnemyWeapons {
         public override void Initialize(Vector2 direction, Vector2 position) {
             base.Initialize(direction, position);
 
-            this.speed = 2;
+            this.speed = 120;
             this.lifetime = 1;
             this.texturePath = ContentPaths.Doctor + "DocKnife.png";
         }

@@ -20,7 +20,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         }
 
         public override Vector2 CalculateVector() {
-            return targetHeading * speed * 60 * Time.DeltaTime;
+            return targetHeading * speed * Time.DeltaTime;
         }
 
         public override void Update() {

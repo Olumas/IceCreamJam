@@ -15,7 +15,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         public override void Initialize(Vector2 direction, Vector2 position) {
             base.Initialize(direction, position);
             this.Name = "BananaBig";
-            this.speed = 10;
+            this.speed = 600;
             this.damage = 3;
             this.lifetime = 1.5f;
             this.hits = 0;
@@ -73,7 +73,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         }
 
         public override Vector2 CalculateVector() {
-            return direction * speed * 60 * Time.DeltaTime * awayVelocity;
+            return direction * speed * Time.DeltaTime * awayVelocity;
         }
 
         public override void OnHit(CollisionResult? result) {

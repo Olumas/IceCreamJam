@@ -16,7 +16,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
 
             this.cost = 1;
             this.damage = 1;
-            this.speed = 3;
+            this.speed = 180;
             this.lifetime = 1;
 
             // If this scoop has been reused, set it to use the correct texture.
@@ -47,8 +47,8 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         public override Vector2 CalculateVector() {
             var dot = Vector2.Dot(Vector2.Normalize(truckVelocity), direction);
             //if(dot > 0)
-            //    return (direction * speed * 60 * Time.DeltaTime) + dot * truckVelocity;
-            return (direction * speed * 60 * Time.DeltaTime);
+            //    return (direction * speed * Time.DeltaTime) + dot * truckVelocity;
+            return (direction * speed * Time.DeltaTime);
         }
 
         public override void OnHit(CollisionResult? result) {

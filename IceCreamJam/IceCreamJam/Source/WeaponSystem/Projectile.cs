@@ -67,7 +67,7 @@ namespace IceCreamJam.Source.WeaponSystem {
         /// </summary>
         /// <returns>The vector to move the projectile by</returns>
         public virtual Vector2 CalculateVector() {
-            return direction * speed;
+            return direction * speed * Time.DeltaTime;
         }
 
         public override void Update() {

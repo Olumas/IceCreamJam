@@ -11,7 +11,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         public override void Initialize(Vector2 direction, Vector2 position) {
             base.Initialize(direction, position);
 
-            this.speed = 2;
+            this.speed = 120;
             this.lifetime = 5;
             this.damage = 3;
             this.targetHeading = direction;
