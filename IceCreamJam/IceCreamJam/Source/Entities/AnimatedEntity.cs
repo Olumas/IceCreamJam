@@ -5,7 +5,9 @@ namespace IceCreamJam.Source.Entities {
     class AnimatedEntity : Entity {
         public SpriteAnimator animator;
         public AnimatedEntity() {
-            this.animator = AddComponent(new SpriteAnimator());
+            this.animator = AddComponent(new SpriteAnimator() {
+                RenderLayer = Constants.Layer_FX
+            });
         }
 
         public override void OnAddedToScene() {

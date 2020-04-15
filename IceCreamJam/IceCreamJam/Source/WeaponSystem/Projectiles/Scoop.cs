@@ -52,6 +52,8 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         }
 
         public override void OnHit(CollisionResult? result) {
+            base.OnHit(result);
+
             var hitFX = Scene.AddEntity(new AnimatedEntity());
 
             hitFX.Position = this.Position;

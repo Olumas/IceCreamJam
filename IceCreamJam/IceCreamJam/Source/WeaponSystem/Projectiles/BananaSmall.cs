@@ -1,4 +1,5 @@
 ﻿using IceCreamJam.Source.Content;
+using IceCreamJam.Source.Entities.Enemies;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
@@ -7,7 +8,7 @@ using Nez.Textures;
 namespace IceCreamJam.Source.WeaponSystem.Projectiles {
     class BananaSmall : Projectile {
 
-        private int dmg;
+        private int hits;
         private Collider otherCollider;
         private float startAngle;
         private float rotateAngle;
@@ -18,10 +19,11 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             this.speed = 5;
             this.damage = 1;
             this.lifetime = 2;
-            this.dmg = 0;
+            this.hits = 0;
+            this.damage = 1;
 
             if(this.renderer != null)
-                (this.renderer as SpriteAnimator).Play($"Fly{dmg}");
+                (this.renderer as SpriteAnimator).Play($"Fly{hits}");
 
             this.otherCollider = null;
             this.startAngle = this.Rotation + Mathf.Deg2Rad * 90;
@@ -60,10 +62,14 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
                 if(otherCollider == result.Collider)
                     return;
 
-                if(dmg == 2)
+                if(result.Collider.Entity is Enemy)
+                    (result.Collider.Entity as Enemy).Damage(damage);
+
+                if(hits == 2)
                     Pool<BananaSmall>.Free(this);
                 else
-                    (this.renderer as SpriteAnimator).Play($"Fly{++dmg}");
+                    (this.renderer as SpriteAnimator).Play($"Fly{++hits}");
+
                 this.otherCollider = result.Collider;
             } else {
                 this.otherCollider = null;

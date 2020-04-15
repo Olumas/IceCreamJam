@@ -1,6 +1,7 @@
 ﻿using IceCreamJam.Source.Components;
 using IceCreamJam.Source.Content;
 using IceCreamJam.Source.Entities;
+using IceCreamJam.Source.Entities.Civilians;
 using IceCreamJam.Source.Entities.Enemies;
 using IceCreamJam.Source.Systems;
 using IceCreamJam.Source.Tiled;
@@ -20,16 +21,22 @@ namespace IceCreamJam.Source.Scenes {
             AddRenderer(new DefaultRenderer());
 
             AddEntityProcessor(new HomingProjectileSystem(new Matcher().All(typeof(HomingTargetComponent))));
-            AddEntityProcessor(new NPCSystem(new Matcher().All(typeof(NPCComponent))));
+            AddEntityProcessor(new CivilianSystem(new Matcher().All(typeof(CivilianComponent))));
         }
 
         public override void OnStart() {
             truck = AddEntity(new Truck() { Position = new Vector2(Screen.Width / 2, Screen.Height / 2) } );
-            for(int i = 0; i < 5; i++) {
-                AddEntity(new NPC(ContentPaths.NPC + $"NPC{i}.png") { Position = new Vector2(Screen.Width / 2 + i * 32, Screen.Height / 2) });
+
+            //for(int i = 0; i < 5; i++) 
+            //    AddEntity(new Civilian(ContentPaths.NPC + $"NPC{i}.png") { Position = new Vector2(Screen.Width / 2 + i * 32, Screen.Height / 2) });
+
+            for(int i = 0; i < 30; i++) {
+                AddEntity(new Doctor() { Position = new Vector2(Random.NextInt(Screen.Width), Random.NextInt(Screen.Height)) });
             }
 
-            AddEntity(new Doctor() { Position = new Vector2(Screen.Width / 2, Screen.Height / 2 + 100) });
+            //AddEntity(new Doctor() { Position = new Vector2(Screen.Width / 2, Screen.Height / 2 + 200) });
+            //AddEntity(new Doctor() { Position = new Vector2(Screen.Width / 2, Screen.Height / 2 + 400) });
+
             AddEntity(new Crosshair());
 
             loader.Load(ContentPaths.Test1);

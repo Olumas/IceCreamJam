@@ -1,4 +1,5 @@
 ﻿using IceCreamJam.Source.Content;
+using IceCreamJam.Source.Entities.Enemies;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
@@ -8,20 +9,20 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
     class BananaBig : Projectile {
 
         private float awayVelocity;
-        private int dmg;
+        private int hits;
         private Collider otherCollider;
 
         public override void Initialize(Vector2 direction, Vector2 position) {
             base.Initialize(direction, position);
             this.Name = "BananaBig";
             this.speed = 10;
-            this.damage = 1;
+            this.damage = 3;
             this.lifetime = 1.5f;
-            this.dmg = 0;
+            this.hits = 0;
             otherCollider = null;
 
             if(this.renderer != null)
-                (this.renderer as SpriteAnimator).Play($"Fly{dmg}");
+                (this.renderer as SpriteAnimator).Play($"Fly{hits}");
 
             this.awayVelocity = 1;
             this.Rotation = 0;
@@ -58,10 +59,13 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
                 if(otherCollider == result.Collider)
                     return;
 
-                if(dmg == 2)
+                if(result.Collider.Entity is Enemy)
+                    (result.Collider.Entity as Enemy).Damage(damage);
+
+                if(hits == 2)
                     Pool<BananaBig>.Free(this);
                 else
-                    (this.renderer as SpriteAnimator).Play($"Fly{++dmg}");
+                    (this.renderer as SpriteAnimator).Play($"Fly{++hits}");
                 this.otherCollider = result.Collider;
             } else {
                 this.otherCollider = null;
@@ -72,7 +76,8 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
             return direction * speed * 60 * Time.DeltaTime * awayVelocity;
         }
 
-        public override void OnHit(CollisionResult? result) { 
+        public override void OnHit(CollisionResult? result) {
+            base.OnHit(result);
 
             // Death by timeout
             if(!result.HasValue)

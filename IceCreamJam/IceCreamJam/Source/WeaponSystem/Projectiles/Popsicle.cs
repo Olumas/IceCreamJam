@@ -13,6 +13,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
 
             this.speed = 2;
             this.lifetime = 5;
+            this.damage = 3;
             this.targetHeading = direction;
         }
 
@@ -29,6 +30,8 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         }
 
         public override void OnHit(CollisionResult? result) {
+            base.OnHit(result);
+
             var hitFX = Scene.AddEntity(new AnimatedEntity());
             var dir = CalculateVector();
             hitFX.Rotation = Mathf.Atan2(dir.Y, dir.X);

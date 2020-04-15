@@ -42,6 +42,8 @@ namespace IceCreamJam.Source.WeaponSystem {
             this.Rotation = newAngle;
         }
 
-        public override void OnHit(CollisionResult? result) { }
+        public override void OnHit(CollisionResult? result) {
+            base.OnHit(result);
+        }
     }
 }

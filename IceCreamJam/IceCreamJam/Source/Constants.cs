@@ -24,10 +24,10 @@ namespace IceCreamJam.Source {
         public const int Layer_WeaponOver = 8;
         public const int Layer_UI = -10;
 
-
-
         public const int Layer_Truck = 15;
         public const int Layer_NPC = 5;
-        public const int Layer_Buildings = 6;   
+        public const int Layer_Buildings = 6;
+
+        public const int Layer_FX = 8;
     }
 }

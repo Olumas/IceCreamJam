@@ -1,18 +1,19 @@
 ﻿using IceCreamJam.Source.Entities;
+using IceCreamJam.Source.Entities.Civilians;
 using Microsoft.Xna.Framework;
 using Nez;
 using System;
 using System.Collections.Generic;
 
 namespace IceCreamJam.Source.Systems {
-    class NPCSystem : EntitySystem {
+    class CivilianSystem : EntitySystem {
         private Truck truck;
 
         private const int approachRadius = 150;
         private const int stopRadius = 75;
         private const int awayRadius = 50;
 
-        public NPCSystem(Matcher matcher) : base(matcher) { }
+        public CivilianSystem(Matcher matcher) : base(matcher) { }
 
         protected override void Process(List<Entity> entities) {
             base.Process(entities);
@@ -21,19 +22,19 @@ namespace IceCreamJam.Source.Systems {
                 truck = (Truck)Scene.FindEntity("Truck");
 
             foreach(Entity e in entities) {
-                var npc = (NPC)e;
+                var civilian = (Civilian)e;
 
-                var distance = Vector2.Distance(truck.Position, npc.Position);
+                var distance = Vector2.Distance(truck.Position, civilian.Position);
                 if(distance <= 0)
                     continue;
 
                 // Flip to face truck
-                npc.Flip(truck.Position.X < npc.Position.X);
+                civilian.Flip(truck.Position.X < civilian.Position.X);
 
-                var direction = Vector2.Normalize(truck.Position - npc.Position);
+                var direction = Vector2.Normalize(truck.Position - civilian.Position);
 
                 var vector = Vector2.Zero;
-                var avoid = GetAvoidVector(npc, entities);
+                var avoid = GetAvoidVector(civilian, entities);
 
                 if(distance <= approachRadius && distance >= stopRadius)
                     vector = direction;
@@ -42,7 +43,7 @@ namespace IceCreamJam.Source.Systems {
 
                     var b = truck.Position;
                     var a = truck.Position + truck.rb.Velocity;
-                    var position = Math.Sign((b.X - a.X) * (npc.Position.Y - a.Y) - (b.X - a.X) * (npc.Position.X - a.X));
+                    var position = Math.Sign((b.X - a.X) * (civilian.Position.Y - a.Y) - (b.X - a.X) * (civilian.Position.X - a.X));
                     var offset = Mathf.Deg2Rad * 90 * position;
                     angle += offset;
 
@@ -54,12 +55,12 @@ namespace IceCreamJam.Source.Systems {
 
                 var final = vector + avoid;
 
-                npc.Move(final);
-                npc.PauseWalk(final.Length() == 0);
+                civilian.Move(final);
+                civilian.PauseWalk(final.Length() == 0);
             }
         }
 
-        private Vector2 GetAvoidVector(NPC npc, List<Entity> entities) {
+        private Vector2 GetAvoidVector(Civilian npc, List<Entity> entities) {
             var avoid = new Vector2();
             var count = 0;
 

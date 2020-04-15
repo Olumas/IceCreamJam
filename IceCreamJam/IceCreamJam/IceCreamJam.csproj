@@ -49,6 +49,7 @@
     <Compile Include="Source\Components\ColliderManager.cs" />
     <Compile Include="Source\Components\EntitySpringComponent.cs" />
     <Compile Include="Source\Components\HomingTargetComponent.cs" />
+    <Compile Include="Source\Components\CivilianComponent.cs" />
     <Compile Include="Source\Components\NPCComponent.cs" />
     <Compile Include="Source\Components\PlayerAnimationComponent.cs" />
     <Compile Include="Source\Components\DirectionComponent.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Source\Entities\Building.cs" />
     <Compile Include="Source\Entities\Enemies\Doctor.cs" />
     <Compile Include="Source\Entities\Enemies\Enemy.cs" />
+    <Compile Include="Source\Entities\Civilians\Civilian.cs" />
     <Compile Include="Source\Entities\NPC.cs" />
     <Compile Include="Source\Entities\SpriteEntity.cs" />
     <Compile Include="Source\Entities\Truck.cs" />
@@ -68,11 +70,13 @@
     <Compile Include="Source\Systems\HomingProjectileSystem.cs" />
     <Compile Include="Source\InputManager.cs" />
     <Compile Include="Source\Scenes\MainScene.cs" />
-    <Compile Include="Source\Systems\NPCSystem.cs" />
+    <Compile Include="Source\Systems\CivilianSystem.cs" />
     <Compile Include="Source\Tiled\TiledMap.cs" />
     <Compile Include="Source\Tiled\TilemapLoader.cs" />
     <Compile Include="Source\UI\Crosshair.cs" />
     <Compile Include="Source\Utility.cs" />
+    <Compile Include="Source\WeaponSystem\EnemyWeapons\DoctorKnife.cs" />
+    <Compile Include="Source\WeaponSystem\EnemyWeapons\EnemyProjectile.cs" />
     <Compile Include="Source\WeaponSystem\HomingProjectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectile.cs" />
     <Compile Include="Source\WeaponSystem\Projectiles\BananaBig.cs" />
@@ -167,6 +171,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Enemies\Doctor\DocAttack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Enemies\Doctor\DocHurt.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Enemies\Doctor\DocKnife.png">

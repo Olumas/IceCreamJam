@@ -1,4 +1,5 @@
 ﻿using IceCreamJam.Source.Components;
+using IceCreamJam.Source.Entities.Enemies;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
@@ -21,11 +22,6 @@ namespace IceCreamJam.Source.WeaponSystem {
         public bool IsNewProjectile = true;
 
         public Projectile() {}
-
-        public virtual void Initialize(Vector2 direction, Vector2 position, float lifetime) {
-            Initialize(direction, position);
-            this.lifetime = lifetime;
-        }
 
         public virtual void Initialize(Vector2 direction, Vector2 position) {
             this.direction = direction;
@@ -90,9 +86,13 @@ namespace IceCreamJam.Source.WeaponSystem {
         /// <summary>
         /// Override this to instantiate sub-projectiles
         /// </summary>
-        public abstract void OnHit(CollisionResult? result);
+        public virtual void OnHit(CollisionResult? result) {
+            if(result.HasValue && result.Value.Collider.Entity is Enemy)
+                (result.Value.Collider.Entity as Enemy).Damage(damage);
+                
             // Pool<T>.Free(this); 
             // ^^ Every projectile must have this!
+        }
 
         public void Reset() {
             // All important fields should be reset in Initialize,

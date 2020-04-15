@@ -10,6 +10,7 @@ namespace IceCreamJam.Source.Entities {
 	class Truck : Entity {
 
 		public ArcadeRigidbody rb;
+		private float health = 50;
 
 		public override void OnAddedToScene() {
 			this.Name = "Truck";
@@ -43,6 +44,13 @@ namespace IceCreamJam.Source.Entities {
 			batcher.DrawCircle(this.Position, 50, Color.Green);
 			batcher.DrawCircle(this.Position, 75, Color.Green);
 			batcher.DrawCircle(this.Position, 150, Color.Green);
+		}
+
+		public void Damage(float damage) {
+			this.health -= damage;
+			if(health <= 0) {
+				Debug.Log("Dead!");
+			}
 		}
 	}
 }
