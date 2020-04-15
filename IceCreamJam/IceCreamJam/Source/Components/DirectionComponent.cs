@@ -50,7 +50,7 @@ namespace IceCreamJam.Source.Components {
 			}
 		}
 
-		public static Direction8 RotateCW(this Direction8 d, int increments) {
+		public static Direction8 Rotate(this Direction8 d, int increments) {
 			return (Direction8)Utility.Mod((int)d + increments, 8);
 		}
 

@@ -15,7 +15,7 @@ namespace IceCreamJam.Source.Components {
 		public bool InputStart => !previnputHeld && currInputHeld;
 		public bool InputEnd => previnputHeld && !currInputHeld;
 
-		public Action<Direction8> OnInputStart;
+		public event Action<Direction8> OnInputStart;
 		
 		public void Update() {
 			// poll the static input manager for current input information

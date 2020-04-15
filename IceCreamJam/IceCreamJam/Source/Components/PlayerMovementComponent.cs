@@ -10,24 +10,22 @@ namespace IceCreamJam.Source.Components {
 
 		public float acceleration = 40f;
 		public float coastDeceleration = 30f;
-		public float brakeDeceleration = 50f;
+		public float brakeDeceleration = 60f;
 		public float maxSpeed = 200f;
 
-		public float turnSpeed;
+		// base seconds per increment
+		public float turnTime = 0.125f;
+		[Inspectable]
+		private float turningTimer = 0;
 
 		private Direction8 targetHeading;
-		private Direction8 currentHeading;
 		private Vector2 currentDirectionVector = new Vector2(1, 0);
 
 		[Inspectable]
 		private float speed = 0f;
 
 		public Direction8 CurrentHeading {
-			get => this.currentHeading; set {
-				currentHeading = value;
-				currentDirectionVector = value.ToVector2().Normalized();
-				direction.Direction = value;
-			}
+			get => direction.Direction; set => direction.Direction = value;
 		}
 
 		public override void OnAddedToEntity() {
@@ -36,32 +34,43 @@ namespace IceCreamJam.Source.Components {
 			direction = Entity.GetComponent<DirectionComponent>();
 			playerInput = Entity.GetComponent<PlayerInputComponent>();
 
-			playerInput.OnInputStart += this.GetInput;
+			playerInput.OnInputStart += this.PlayerInput_OnInputStart; ;
+			direction.OnDirectionChange += this.Direction_OnDirectionChange;
 		}
 
-		private void GetInput(Direction8 obj) {
+		private void PlayerInput_OnInputStart(Direction8 obj) {
 			targetHeading = obj;
+		}
 
-			if (speed == 0) {
-				CurrentHeading = obj;
-			}
+		private void Direction_OnDirectionChange(Direction8 obj) {
+			currentDirectionVector = obj.ToVector2().Normalized();
 		}
 
 		public void Update() {
 			if (playerInput.InputHeld) {
 				if (CurrentHeading == targetHeading) {
-					// facing same direction as input
+					// facing same direction as target
 					speed = Mathf.Approach(speed, maxSpeed, acceleration * Time.DeltaTime);
 				} else if (CurrentHeading.Difference(targetHeading) == 4) {
-					// facing opposite direction as input
+					// facing opposite direction as target
 					speed = Mathf.Approach(speed, 0, brakeDeceleration * Time.DeltaTime);
 				} else {
 					// facing different direction from input
 					int difference = CurrentHeading.Difference(targetHeading);
-					CurrentHeading = CurrentHeading.RotateCW(difference);
+					if (speed == 0) {
+						CurrentHeading = CurrentHeading.Rotate(difference);
+					} else {
+						if (turningTimer >= turnTime) {
+							CurrentHeading = CurrentHeading.Rotate(System.Math.Sign(difference));
+							turningTimer -= turnTime;
+						} else {
+							turningTimer += Time.DeltaTime;
+						}
+					}
 				}
 			} else {
 				speed = Mathf.Approach(speed, 0, coastDeceleration * Time.DeltaTime);
+				turningTimer = 0;
 			}
 
 			Vector2 currentVelocity = currentDirectionVector * speed;
