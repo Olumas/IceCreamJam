@@ -64,7 +64,7 @@ namespace IceCreamJam.Source.Components {
 							CurrentHeading = CurrentHeading.Rotate(System.Math.Sign(difference));
 							turningTimer -= turnTime;
 						} else {
-							turningTimer += Time.DeltaTime;
+							turningTimer += Time.DeltaTime + (Time.DeltaTime * speed / maxSpeed);
 						}
 					}
 				}
