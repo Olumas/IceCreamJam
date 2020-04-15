@@ -47,7 +47,7 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             // Calculate delay before reforming popsicle
 
             //reformTime = reloadTime - (sprites.Count / (Constants.GlobalFPS * 4));
-            reformTime = reloadTime - 0.15f; // Jank approximation that looks good enough
+            reformTime = (reloadTime - 0.15f); // Jank approximation that looks good enough
         }
 
         public override Projectile InstantiateProjectile(Vector2 pos) {
@@ -59,6 +59,11 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
             return p;
         }
 
+        public override void OnEquipped() {
+            base.OnEquipped();
+            loadedPopsicle.ToggleVisible(true);
+        }
+
         public override void OnUnequipped() {
             base.OnUnequipped();
             shatterFX.ToggleVisible(false);
@@ -68,17 +73,17 @@ namespace IceCreamJam.Source.WeaponSystem.Weapons {
         public override void OnShoot() {
             base.Shoot();
 
-            reformCoroutine = Core.StartCoroutine(ReloadTimer());
+            //reformCoroutine = Core.StartCoroutine(ReloadTimer());
         }
 
-        IEnumerator ReloadTimer() {
-            loadedPopsicle.ToggleVisible(false);
-            yield return Coroutine.WaitForSeconds(reformTime);
-            // Reform popsicle
-            shatterFX.ToggleVisible(true);
-            shatterFX.animator.Play("Reform", Nez.Sprites.SpriteAnimator.LoopMode.ClampForever);
-            loadedPopsicle.ToggleVisible(false);
-        }
+        //IEnumerator ReloadTimer() {
+        //    loadedPopsicle.ToggleVisible(false);
+        //    yield return Coroutine.WaitForSeconds(reformTime);
+        //    // Reform popsicle
+        //    shatterFX.ToggleVisible(true);
+        //    shatterFX.animator.Play("Reform", Nez.Sprites.SpriteAnimator.LoopMode.ClampForever);
+        //    loadedPopsicle.ToggleVisible(false);
+        //}
 
         private void ReloadPopsicle() {
             shatterFX.ToggleVisible(false);

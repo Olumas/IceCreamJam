@@ -46,9 +46,9 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
 
         public override Vector2 CalculateVector() {
             var dot = Vector2.Dot(Vector2.Normalize(truckVelocity), direction);
-            if(dot > 0)
-                return (direction * speed) + dot * truckVelocity;
-            return (direction * speed);
+            //if(dot > 0)
+            //    return (direction * speed * 60 * Time.DeltaTime) + dot * truckVelocity;
+            return (direction * speed * 60 * Time.DeltaTime);
         }
 
         public override void OnHit(CollisionResult? result) {

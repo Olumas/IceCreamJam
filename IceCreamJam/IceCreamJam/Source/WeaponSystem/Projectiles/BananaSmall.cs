@@ -44,7 +44,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         }
 
         public override Vector2 CalculateVector() {
-            return new Vector2(Mathf.Cos(rotateAngle), Mathf.Sin(rotateAngle)) * speed;
+            return new Vector2(Mathf.Cos(rotateAngle), Mathf.Sin(rotateAngle)) * speed * 60 * Time.DeltaTime;
         }
 
         public override void Update() {

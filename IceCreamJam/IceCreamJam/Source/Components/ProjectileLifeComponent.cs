@@ -4,7 +4,7 @@ using Nez;
 namespace IceCreamJam.Source.Components {
     class ProjectileLifeComponent : Component, IUpdatable {
         public float lifetime;
-        public float startTime;
+        public float timeProgress;
         public bool isFinished = true;
         public float progress;
         
@@ -14,16 +14,17 @@ namespace IceCreamJam.Source.Components {
         }
 
         public void Start() {
-            startTime = Time.TotalTime;
             isFinished = false;
             progress = 0;
+            this.timeProgress = 0f;
         }
 
         public void Update() {
             if(isFinished)
                 return;
 
-            var remainingTime = (startTime + lifetime) - Time.TotalTime;
+            timeProgress += Time.DeltaTime;
+            var remainingTime = lifetime - timeProgress;
             progress = remainingTime / lifetime;
 
             if(remainingTime < 0.01f) {

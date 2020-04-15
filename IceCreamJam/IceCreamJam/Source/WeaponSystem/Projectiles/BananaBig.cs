@@ -69,7 +69,7 @@ namespace IceCreamJam.Source.WeaponSystem.Projectiles {
         }
 
         public override Vector2 CalculateVector() {
-            return direction * speed * awayVelocity;
+            return direction * speed * 60 * Time.DeltaTime * awayVelocity;
         }
 
         public override void OnHit(CollisionResult? result) { 
