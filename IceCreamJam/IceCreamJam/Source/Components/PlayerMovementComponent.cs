@@ -47,29 +47,28 @@ namespace IceCreamJam.Source.Components {
 		}
 
 		public void Update() {
-			if (playerInput.InputHeld) {
-				if (CurrentHeading == targetHeading) {
-					// facing same direction as target
-					speed = Mathf.Approach(speed, maxSpeed, acceleration * Time.DeltaTime);
-				} else if (CurrentHeading.Difference(targetHeading) == 4) {
-					// facing opposite direction as target
-					speed = Mathf.Approach(speed, 0, brakeDeceleration * Time.DeltaTime);
+			if (InputManager.brake) {
+				speed = Mathf.Approach(speed, 0, brakeDeceleration * Time.DeltaTime);
+			} else if (playerInput.InputHeld && CurrentHeading == targetHeading) {
+				speed = Mathf.Approach(speed, maxSpeed, acceleration * Time.DeltaTime);
+			} else {
+				speed = Mathf.Approach(speed, 0, coastDeceleration * Time.DeltaTime);
+			}
+
+			// facing different direction from input
+			if (playerInput.InputHeld && CurrentHeading != targetHeading) {
+				int difference = CurrentHeading.Difference(targetHeading);
+				if (speed == 0) {
+					CurrentHeading = CurrentHeading.Rotate(difference);
 				} else {
-					// facing different direction from input
-					int difference = CurrentHeading.Difference(targetHeading);
-					if (speed == 0) {
-						CurrentHeading = CurrentHeading.Rotate(difference);
+					if (turningTimer >= turnTime) {
+						CurrentHeading = CurrentHeading.Rotate(System.Math.Sign(difference));
+						turningTimer -= turnTime;
 					} else {
-						if (turningTimer >= turnTime) {
-							CurrentHeading = CurrentHeading.Rotate(System.Math.Sign(difference));
-							turningTimer -= turnTime;
-						} else {
-							turningTimer += Time.DeltaTime + (Time.DeltaTime * speed / maxSpeed);
-						}
+						turningTimer += Time.DeltaTime + (Time.DeltaTime * speed / maxSpeed);
 					}
 				}
 			} else {
-				speed = Mathf.Approach(speed, 0, coastDeceleration * Time.DeltaTime);
 				turningTimer = 0;
 			}
 

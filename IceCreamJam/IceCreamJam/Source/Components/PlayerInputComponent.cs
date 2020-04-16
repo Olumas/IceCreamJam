@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nez;
 
 namespace IceCreamJam.Source.Components {
@@ -27,10 +23,10 @@ namespace IceCreamJam.Source.Components {
 
 			// convert the directional input information into a Direction8
 			var newDir = DirectionFromInput(isNorth, isWest);
-			if (newDir.HasValue && (InputStart || prevDirection != newDir)) {
+			if (newDir.HasValue && (InputStart || prevDirection != newDir))
 				OnInputStart?.Invoke(newDir.Value);
-			}
 			prevDirection = newDir;
+
 		}
 
 		private static Direction8? DirectionFromInput(bool? isNorth, bool? isWest) {

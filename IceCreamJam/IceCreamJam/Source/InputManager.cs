@@ -12,8 +12,15 @@ namespace IceCreamJam.Source {
 		/// </summary>
 		public static readonly VirtualAxis xAxis;
 
+		/// <summary>
+		/// x: negative values are left, positive values are right<br/>
+		/// y: negative values are up, positive values are down
+		/// </summary>
+		public static readonly VirtualJoystick joystick;
+
+		public static readonly VirtualButton brake;
+
 		public static readonly VirtualButton shoot;
-		// not sure if necessary
 		public static readonly VirtualIntegerAxis switchWeapon;
 
 		static InputManager() {
@@ -24,6 +31,14 @@ namespace IceCreamJam.Source {
 			yAxis = new VirtualAxis();
 			yAxis.Nodes.Add(new VirtualAxis.KeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.W, Keys.S));
 			yAxis.Nodes.Add(new VirtualAxis.GamePadLeftStickY());
+
+			joystick = new VirtualJoystick(false);
+			joystick.AddKeyboardKeys(VirtualInput.OverlapBehavior.TakeNewer, Keys.A, Keys.D, Keys.W, Keys.S);
+			joystick.AddGamePadLeftStick();
+
+			brake = new VirtualButton();
+			brake.AddKeyboardKey(Keys.LeftShift);
+			// TODO: add gamepad button for braking
 
 			shoot = new VirtualButton();
 			shoot.AddMouseLeftButton();
