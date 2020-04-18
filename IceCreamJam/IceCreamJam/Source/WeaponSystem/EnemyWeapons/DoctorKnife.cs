@@ -5,15 +5,16 @@ using Nez;
 namespace IceCreamJam.Source.WeaponSystem.EnemyWeapons {
     class DoctorKnife : EnemyProjectile {
         public DoctorKnife() {
-            this.Name = "DoctorKnife";
+            Name = "DoctorKnife";
         }
 
         public override void Initialize(Vector2 direction, Vector2 position) {
             base.Initialize(direction, position);
 
-            this.speed = 120;
-            this.lifetime = 1;
-            this.texturePath = ContentPaths.Doctor + "DocKnife.png";
+            speed = 120;
+            damage = 1;
+            lifetime = 2;
+            texturePath = ContentPaths.Doctor + "DocKnife.png";
         }
 
         public override void OnHit(CollisionResult? result) {

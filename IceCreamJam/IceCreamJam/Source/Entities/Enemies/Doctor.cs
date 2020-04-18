@@ -11,11 +11,11 @@ namespace IceCreamJam.Source.Entities.Enemies {
 
         private const float stunCooldown = 0.5f;
         private const float range = 300f;
-        private bool canBeStunned = true;
-        private bool canShoot = true;
+        private bool canBeStunned;
+        private bool canShoot;
 
+        private Vector2 shootDirection;
         private ICoroutine approachCoroutine;
-
         private SpriteAnimator animator;
 
         private enum DoctorStates {
@@ -26,7 +26,18 @@ namespace IceCreamJam.Source.Entities.Enemies {
         private DoctorStates state = DoctorStates.approach;
 
         public Doctor() {
-            this.health = 5;
+            maxHealth = 5;
+        }
+
+        public override void Initialize(Vector2 position) {
+            base.Initialize(position);
+            canBeStunned = true;
+            canShoot = true;
+
+            if(!isNewEnemy) {
+                SetEnabled(true);
+                approachCoroutine = Core.StartCoroutine(ChangeState());
+            }
         }
 
         public override void OnAddedToScene() {
@@ -39,7 +50,6 @@ namespace IceCreamJam.Source.Entities.Enemies {
                 Height = 14
             });
             b.PhysicsLayer = (int)Constants.PhysicsLayers.NPC;
-
             approachCoroutine = Core.StartCoroutine(ChangeState());
         }
 
@@ -57,7 +67,9 @@ namespace IceCreamJam.Source.Entities.Enemies {
                 animator.AddAnimation($"Attack{i}", attackSprites.GetRange(i * 7, 7).ToArray());
 
             var hurtTexture = Scene.Content.LoadTexture(ContentPaths.Doctor + "DocHurt.png");
-            animator.AddAnimation("Hurt", 3, new Sprite(hurtTexture));
+            var hurtSprites = Sprite.SpritesFromAtlas(hurtTexture, 19, 27);
+            hurtSprites.AddRange(hurtSprites);
+            animator.AddAnimation("Hurt", 20, hurtSprites.ToArray());
             animator.AddAnimation("Idle", 8, attackSprites[0]);
 
             this.renderer = animator;
@@ -88,13 +100,19 @@ namespace IceCreamJam.Source.Entities.Enemies {
 
             state = DoctorStates.attack;
             animator.Play("Attack2", SpriteAnimator.LoopMode.ClampForever);
-            yield return null;
         }
 
         IEnumerator StunCooldownTimer() {
             canBeStunned = false;
             yield return Coroutine.WaitForSeconds(stunCooldown);
             canBeStunned = true;
+        }
+
+        IEnumerator SpawnOtherKnives() {
+            yield return Coroutine.WaitForSeconds(0.25f);
+            Shoot();
+            yield return Coroutine.WaitForSeconds(0.25f);
+            Shoot();
         }
 
         public override void Damage(float damage) {
@@ -144,31 +162,42 @@ namespace IceCreamJam.Source.Entities.Enemies {
 
         private void AttackState() {
             if(animator.CurrentAnimationName == "Attack2") {
-                if(animator.CurrentFrame == 3)
+                if(animator.CurrentFrame == 3 && canShoot) {
+                    canShoot = false;
+                    shootDirection = Vector2.Normalize(truck.Position - Position);
                     Shoot();
+
+                    Core.StartCoroutine(SpawnOtherKnives());
+                }
                 if(animator.CurrentFrame == 0)
                     canShoot = true;
             }
         }
 
         private void Shoot() {
-            if(!canShoot)
+            if(Scene == null)       // Don't continue shooting if doctor is dead
                 return;
 
-            canShoot = false;
-            var angle = Mathf.AngleBetweenVectors(this.Position, truck.Position);
-            var spread = 15; // Degrees separation
-            CreateProjectile(Mathf.AngleToVector(angle, 1));
-            CreateProjectile(Mathf.AngleToVector(angle + Mathf.Deg2Rad * spread, 1));
-            CreateProjectile(Mathf.AngleToVector(angle - Mathf.Deg2Rad * spread, 1));
+            var knife = Pool<DoctorKnife>.Obtain();
+            knife.Initialize(shootDirection, Position);
 
-            void CreateProjectile(Vector2 direction) {
-                var knife = Pool<DoctorKnife>.Obtain();
-                knife.Initialize(direction, Position);
+            if(knife.IsNewProjectile)
+                Scene.AddEntity(knife);
+        }
 
-                if(knife.IsNewProjectile)
-                    Scene.AddEntity(knife);
-            }
+        public override void OnDeath() {
+            // Spawn death animation
+            var deathAnimation = Scene.AddEntity(new AnimatedEntity());
+
+            deathAnimation.Position = Position;
+
+            var texture = Scene.Content.LoadTexture(ContentPaths.Doctor + "DocDeath.png");
+            var sprites = Sprite.SpritesFromAtlas(texture, 48, 32);
+
+            deathAnimation.animator.AddAnimation("Death", 20, sprites.ToArray());
+            deathAnimation.animator.Play("Death", SpriteAnimator.LoopMode.ClampForever);
+
+            Pool<Doctor>.Free(this);
         }
     }
 }

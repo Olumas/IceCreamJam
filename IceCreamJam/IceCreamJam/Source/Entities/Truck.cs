@@ -48,9 +48,8 @@ namespace IceCreamJam.Source.Entities {
 
 		public void Damage(float damage) {
 			this.health -= damage;
-			if(health <= 0) {
+			if(health <= 0)
 				Debug.Log("Dead!");
-			}
 		}
 	}
 }

@@ -30,8 +30,12 @@ namespace IceCreamJam.Source.Scenes {
             //for(int i = 0; i < 5; i++) 
             //    AddEntity(new Civilian(ContentPaths.NPC + $"NPC{i}.png") { Position = new Vector2(Screen.Width / 2 + i * 32, Screen.Height / 2) });
 
-            for(int i = 0; i < 30; i++) {
-                AddEntity(new Doctor() { Position = new Vector2(Random.NextInt(Screen.Width), Random.NextInt(Screen.Height)) });
+            for(int i = 0; i < 3; i++) {
+                var d = Pool<Doctor>.Obtain();
+                d.Initialize(new Vector2(Random.NextInt(Screen.Width), Random.NextInt(Screen.Height)));
+
+                if(d.isNewEnemy)
+                    AddEntity(d);
             }
 
             //AddEntity(new Doctor() { Position = new Vector2(Screen.Width / 2, Screen.Height / 2 + 200) });
