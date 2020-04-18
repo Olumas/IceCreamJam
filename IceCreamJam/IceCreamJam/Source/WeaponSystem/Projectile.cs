@@ -1,5 +1,6 @@
 ﻿using IceCreamJam.Source.Components;
 using IceCreamJam.Source.Entities.Enemies;
+using IceCreamJam.Source.WeaponSystem.EnemyWeapons;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
@@ -43,7 +44,7 @@ namespace IceCreamJam.Source.WeaponSystem {
             this.collider = AddComponent(new CircleCollider(4) {
                 LocalOffset = new Vector2(5, 0),
                 PhysicsLayer = (int)Constants.PhysicsLayers.PlayerProjectiles,
-                CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC),
+                CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.NPC | Constants.PhysicsLayers.EnemyProjectiles),
             });
 
             if(lifetime != 0f) {
@@ -89,7 +90,11 @@ namespace IceCreamJam.Source.WeaponSystem {
         public virtual void OnHit(CollisionResult? result) {
             if(result.HasValue && result.Value.Collider.Entity is Enemy)
                 (result.Value.Collider.Entity as Enemy).Damage(damage);
-                
+            if(result.HasValue && result.Value.Collider.Entity is EnemyProjectile) {
+                (result.Value.Collider.Entity as EnemyProjectile).OnHit(null);
+                OnHit(null);
+            }
+
             // Pool<T>.Free(this); 
             // ^^ Every projectile must have this!
         }

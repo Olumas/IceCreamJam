@@ -18,7 +18,7 @@ namespace IceCreamJam.Source.WeaponSystem.EnemyWeapons {
             this.collider = AddComponent(new CircleCollider(4) {
                 LocalOffset = new Vector2(5, 0),
                 PhysicsLayer = (int)Constants.PhysicsLayers.EnemyProjectiles,
-                CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.Player),
+                CollidesWithLayers = (int)(Constants.PhysicsLayers.Buildings | Constants.PhysicsLayers.Player | Constants.PhysicsLayers.PlayerProjectiles),
             });
 
             if(lifetime != 0f) {
