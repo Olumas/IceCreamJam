@@ -8,25 +8,81 @@ namespace IceCreamJam.Source.Components {
 		DirectionComponent direction;
 		PlayerInputComponent playerInput;
 
+		/// <summary>
+		/// when accelerating, speed is set to this value if less than the kickstart
+		/// </summary>
+		public float kickstartSpeed = 40f;
+		/// <summary>
+		/// the acceleration of the vehicle in pixels/second/second
+		/// </summary>
 		public float acceleration = 40f;
+		/// <summary>
+		/// the normal maximum speed of the vehicle in pixels/second
+		/// </summary>
+		public float normalMaxSpeed = 200f;
+		/// <summary>
+		/// the deceleration of the vehicle when passively coasting in pixels/second/second
+		/// </summary>
 		public float coastDeceleration = 30f;
-		public float brakeDeceleration = 60f;
-		public float maxSpeed = 200f;
+		/// <summary>
+		/// the deceleration of the vehicle when actively braking in pixels/second/second
+		/// </summary>
+		public float brakeDeceleration = 80f;
 
-		// base seconds per increment
+		/// <summary>
+		/// the base time per increment while turning in seconds
+		/// </summary>
 		public float turnTime = 0.125f;
-		[Inspectable]
-		private float turningTimer = 0;
+
+		/// <summary>
+		/// the speed added to the current speed at the beginning of a dash in pixels/second
+		/// </summary>
+		public float initialDashBoost = 50f;
+		/// <summary>
+		/// the maximum speed of the vehicle during a full dash in pixels/second
+		/// </summary>
+		public float fullDashMaxSpeed = 300f;
+		/// <summary>
+		/// the cooldown time before a full dash can be used again in seconds
+		/// </summary>
+		public float fullDashCooldownTime = 10f;
+		/// <summary>
+		/// the duration of a full dash in seconds
+		/// </summary>
+		public float fullDashTime = 4f;
+		/// <summary>
+		/// the duration of the lingering effects of a full dash in seconds
+		/// </summary>
+		public float fullDashLingerTime = 1f;
+		/// <summary>
+		/// the duration and cooldown time of a mini dash in seconds
+		/// </summary>
+		public float miniDashTime = 1f;
+		
 
 		private Direction8 targetHeading;
+		private Direction8 CurrentHeading {
+			get => direction.Direction; set => direction.Direction = value;
+		}
 		private Vector2 currentDirectionVector = new Vector2(1, 0);
+
+		private State state;
+		private enum State {
+			Normal, FullDash, MiniDash
+		}
 
 		[Inspectable]
 		private float speed = 0f;
+		[Inspectable]
+		private float maxSpeed = 200f;
+		[Inspectable]
+		private float turnTimer = 0;
 
-		public Direction8 CurrentHeading {
-			get => direction.Direction; set => direction.Direction = value;
-		}
+		[Inspectable]
+		private float fullDashCooldownTimer;
+		private float fullDashTimer;
+		private float miniDashTimer;
+		private float miniDashInitialSpeed;
 
 		public override void OnAddedToEntity() {
 			collider = Entity.GetComponent<Collider>();
@@ -34,8 +90,10 @@ namespace IceCreamJam.Source.Components {
 			direction = Entity.GetComponent<DirectionComponent>();
 			playerInput = Entity.GetComponent<PlayerInputComponent>();
 
-			playerInput.OnInputStart += this.PlayerInput_OnInputStart; ;
+			playerInput.OnInputStart += this.PlayerInput_OnInputStart;
 			direction.OnDirectionChange += this.Direction_OnDirectionChange;
+
+			state = State.Normal;
 		}
 
 		private void PlayerInput_OnInputStart(Direction8 obj) {
@@ -47,29 +105,42 @@ namespace IceCreamJam.Source.Components {
 		}
 
 		public void Update() {
-			if (InputManager.brake) {
-				speed = Mathf.Approach(speed, 0, brakeDeceleration * Time.DeltaTime);
-			} else if (playerInput.InputHeld && CurrentHeading == targetHeading) {
-				speed = Mathf.Approach(speed, maxSpeed, acceleration * Time.DeltaTime);
-			} else {
-				speed = Mathf.Approach(speed, 0, coastDeceleration * Time.DeltaTime);
-			}
-
-			// facing different direction from input
-			if (playerInput.InputHeld && CurrentHeading != targetHeading) {
-				int difference = CurrentHeading.Difference(targetHeading);
-				if (speed == 0) {
-					CurrentHeading = CurrentHeading.Rotate(difference);
-				} else {
-					if (turningTimer >= turnTime) {
-						CurrentHeading = CurrentHeading.Rotate(System.Math.Sign(difference));
-						turningTimer -= turnTime;
+			if (state == State.Normal) {
+				if (InputManager.dash.IsDown) {
+					if (fullDashCooldownTimer == 0 && speed + initialDashBoost >= normalMaxSpeed) {
+						state = State.FullDash;
+						fullDashTimer = fullDashTime;
 					} else {
-						turningTimer += Time.DeltaTime + (Time.DeltaTime * speed / maxSpeed);
+						state = State.MiniDash;
+						miniDashTimer = miniDashTime;
+						miniDashInitialSpeed = speed;
 					}
 				}
-			} else {
-				turningTimer = 0;
+			} else if (state == State.FullDash) {
+				if (fullDashTimer == 0) {
+					state = State.Normal;
+					fullDashCooldownTimer = fullDashCooldownTime;
+				}
+			} else if (state == State.MiniDash) {
+				if (miniDashTimer == 0) {
+					state = State.Normal;
+				}
+			}
+
+			if (state == State.Normal) {
+				// when facing different direction from input, attempt to turn
+				if (playerInput.InputHeld && CurrentHeading != targetHeading) {
+					int offset = CalculateRotationOffset(CurrentHeading.Difference(targetHeading));
+					CurrentHeading = CurrentHeading.Rotate(offset);
+				} else turnTimer = 0;
+				speed = CalculateCurrentSpeed(this.speed);
+				fullDashCooldownTimer = Mathf.Approach(fullDashCooldownTimer, 0, Time.DeltaTime);
+			} else if (state == State.FullDash) {
+				speed = fullDashMaxSpeed;
+				fullDashTimer = Mathf.Approach(fullDashTimer, 0, Time.DeltaTime);
+			} else if (state == State.MiniDash) {
+				speed = Mathf.Lerp(miniDashInitialSpeed + initialDashBoost, miniDashInitialSpeed, 1 - miniDashTimer / miniDashTime);
+				miniDashTimer = Mathf.Approach(miniDashTimer, 0, Time.DeltaTime);
 			}
 
 			Vector2 currentVelocity = currentDirectionVector * speed;
@@ -80,6 +151,31 @@ namespace IceCreamJam.Source.Components {
 			if (collider.CollidesWithAny(ref movement, out CollisionResult result)) {
 				if (result.Collider.PhysicsLayer.IsFlagSet((int)Constants.PhysicsLayers.Buildings)) {
 					speed = 0;
+				}
+			}
+		}
+
+		private float CalculateCurrentSpeed(float speed) {
+			if (InputManager.brake) {
+				return Mathf.Approach(speed, 0, brakeDeceleration * Time.DeltaTime);
+			} else if (playerInput.InputHeld && CurrentHeading == targetHeading) {
+				if (speed < kickstartSpeed) speed = kickstartSpeed;
+				return Mathf.Approach(speed, maxSpeed, acceleration * Time.DeltaTime);
+			} else {
+				return Mathf.Approach(speed, 0, coastDeceleration * Time.DeltaTime);
+			}
+		}
+
+		private int CalculateRotationOffset(int difference) {
+			if (speed == 0) {
+				return difference;
+			} else {
+				if (turnTimer >= turnTime) {
+					turnTimer -= turnTime;
+					return System.Math.Sign(difference);
+				} else {
+					turnTimer += Time.DeltaTime + (Time.DeltaTime * speed / maxSpeed);
+					return 0;
 				}
 			}
 		}

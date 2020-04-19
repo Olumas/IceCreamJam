@@ -19,6 +19,7 @@ namespace IceCreamJam.Source {
 		public static readonly VirtualJoystick joystick;
 
 		public static readonly VirtualButton brake;
+		public static readonly VirtualButton dash;
 
 		public static readonly VirtualButton shoot;
 		public static readonly VirtualIntegerAxis switchWeapon;
@@ -39,6 +40,10 @@ namespace IceCreamJam.Source {
 			brake = new VirtualButton();
 			brake.AddKeyboardKey(Keys.LeftShift);
 			// TODO: add gamepad button for braking
+
+			dash = new VirtualButton();
+			dash.AddKeyboardKey(Keys.Space);
+			// TODO: add gamepad button for dashing
 
 			shoot = new VirtualButton();
 			shoot.AddMouseLeftButton();
