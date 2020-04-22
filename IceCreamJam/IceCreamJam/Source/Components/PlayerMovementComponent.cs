@@ -80,7 +80,9 @@ namespace IceCreamJam.Source.Components {
 
 		[Inspectable]
 		private float fullDashCooldownTimer;
+		[Inspectable]
 		private float fullDashTimer;
+		[Inspectable]
 		private float miniDashTimer;
 		private float miniDashInitialSpeed;
 
