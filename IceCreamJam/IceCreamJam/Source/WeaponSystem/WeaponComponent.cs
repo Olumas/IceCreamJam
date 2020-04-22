@@ -20,8 +20,6 @@ namespace IceCreamJam.Source.WeaponSystem {
         }
 
         public override void OnAddedToEntity() {
-            base.OnAddedToEntity();
-
             foreach(Weapon w in weapons) {
                 Entity.Scene.AddEntity(w);
                 w.defaultVisible = false;

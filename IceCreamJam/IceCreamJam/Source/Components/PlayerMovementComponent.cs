@@ -66,6 +66,7 @@ namespace IceCreamJam.Source.Components {
 		}
 		private Vector2 currentDirectionVector = new Vector2(1, 0);
 
+		[Inspectable]
 		private State state;
 		private enum State {
 			Normal, FullDash, MiniDash
