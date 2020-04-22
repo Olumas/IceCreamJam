@@ -23,6 +23,9 @@ namespace IceCreamJam.Source.Systems {
                 float minDist = float.MaxValue;
                 Entity closest = null;
                 foreach(Entity e in entities){
+                    if(!e.Enabled) // Skip disabled targets that are waiting in the Pool
+                        continue;
+
                     var distance = Vector2.Distance(p.Position, e.Position);
                     if(distance > projectileDistance)
                         continue;
