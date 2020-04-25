@@ -3,7 +3,7 @@ using Nez;
 
 namespace IceCreamJam.Source.Components {
     /// <summary>
-    /// Moves it's entity to follow a target
+    /// Moves its entity to follow a target
     /// </summary>
     class EntitySpringComponent : Component, IUpdatable {
 
@@ -22,7 +22,6 @@ namespace IceCreamJam.Source.Components {
         }
 
         public override void OnAddedToEntity() {
-            base.OnAddedToEntity();
             Entity.Position = TargetPosition;
         }
 
